@@ -11,7 +11,7 @@ import {
   Chip,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { AccessTime } from "@mui/icons-material";
+import { AccessTime, WbSunny, NightsStay } from "@mui/icons-material";
 
 const cities = [
   { name: "Quito", timezone: "America/Guayaquil" },
@@ -20,13 +20,9 @@ const cities = [
   { name: "Tokio", timezone: "Asia/Tokyo" },
   { name: "Sídney", timezone: "Australia/Sydney" },
   { name: "Madrid", timezone: "Europe/Madrid" },
-  { name: "Los Ángeles", timezone: "America/Los_Angeles" },
-  { name: "Toronto", timezone: "America/Toronto" },
-  { name: "Buenos Aires", timezone: "America/Argentina/Buenos_Aires" },
-  { name: "París", timezone: "Europe/Paris" },
 ];
 
-export default function WorldClock({ forceDay }) {
+export default function WorldClock() {
   const [selectedCity, setSelectedCity] = useState(cities[0]);
   const [time, setTime] = useState("");
   const [isDay, setIsDay] = useState(true);
@@ -55,13 +51,12 @@ export default function WorldClock({ forceDay }) {
     return () => clearInterval(interval);
   }, [selectedCity]);
 
-  const dayState = forceDay ? true : isDay;
-
-  const gradient = dayState
-    ? "linear-gradient(135deg, #cfd9df, #e2ebf0)"
+  // Fondo con más contraste y texto oscuro cuando es de día
+  const gradient = isDay
+    ? "linear-gradient(135deg, #a1c4fd, #c2e9fb)" // más contrastado y legible
     : "linear-gradient(135deg, #232526, #414345)";
 
-  const textColor = dayState ? "#1b2735" : "#fff";
+  const textColor = isDay ? "#0b2545" : "#fff"; // texto oscuro de día
 
   return (
     <motion.div
@@ -74,8 +69,9 @@ export default function WorldClock({ forceDay }) {
         sx={{
           background: gradient,
           borderRadius: 4,
-          boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
           p: 3,
+          backdropFilter: "blur(10px)",
           maxWidth: 420,
           mx: "auto",
           transition: "background 1s ease",
@@ -83,9 +79,9 @@ export default function WorldClock({ forceDay }) {
       >
         <Card
           sx={{
-            background: dayState
-              ? "rgba(255,255,255,0.6)"
-              : "rgba(255,255,255,0.1)",
+            background: isDay
+              ? "rgba(255,255,255,0.4)"
+              : "rgba(255,255,255,0.15)",
             backdropFilter: "blur(12px)",
             borderRadius: 4,
             color: textColor,
@@ -93,19 +89,34 @@ export default function WorldClock({ forceDay }) {
           }}
         >
           <CardContent>
+            {/* Ícono día/noche */}
+            <motion.div
+              initial={{ rotate: 0 }}
+              animate={{ rotate: isDay ? 0 : 180 }}
+              transition={{ duration: 1 }}
+            >
+              {isDay ? (
+                <WbSunny sx={{ fontSize: 60, color: "#fff" }} />
+              ) : (
+                <NightsStay sx={{ fontSize: 60, color: "#fff" }} />
+              )}
+            </motion.div>
+
+            {/* Ciudad */}
             <Typography
               variant="h4"
               sx={{
-                mt: 1,
+                mt: 2,
                 mb: 1,
                 fontWeight: "bold",
+                letterSpacing: 0.5,
                 color: textColor,
-                textAlign: "center",
               }}
             >
               {selectedCity.name}
             </Typography>
 
+            {/* Hora */}
             <Typography
               variant="h5"
               sx={{
@@ -119,23 +130,24 @@ export default function WorldClock({ forceDay }) {
               <AccessTime sx={{ mr: 1, color: textColor }} /> {time}
             </Typography>
 
+            {/* Día/Noche */}
             <Chip
-              label={dayState ? "☀️ Día" : "🌙 Noche"}
+              label={isDay ? "☀️ Día" : "🌙 Noche"}
               sx={{
-                bgcolor: dayState ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.3)",
+                bgcolor: isDay
+                  ? "rgba(255,255,255,0.3)"
+                  : "rgba(0,0,0,0.3)",
                 color: textColor,
                 mb: 2,
                 fontWeight: "bold",
               }}
             />
 
-            {/* Selector mejorado */}
+            {/* Selector corregido y legible */}
             <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
               <InputLabel
-                shrink
                 sx={{
                   color: textColor,
-                  fontWeight: "bold",
                   "&.Mui-focused": { color: textColor },
                 }}
               >
@@ -151,9 +163,9 @@ export default function WorldClock({ forceDay }) {
                 }
                 sx={{
                   color: textColor,
-                  bgcolor: dayState
-                    ? "rgba(255,255,255,0.9)"
-                    : "rgba(255,255,255,0.15)",
+                  bgcolor: isDay
+                    ? "rgba(255,255,255,0.8)"
+                    : "rgba(255,255,255,0.1)",
                   borderRadius: 2,
                   ".MuiOutlinedInput-notchedOutline": {
                     borderColor: "rgba(255,255,255,0.4)",
@@ -162,9 +174,6 @@ export default function WorldClock({ forceDay }) {
                     borderColor: "rgba(255,255,255,0.7)",
                   },
                   ".MuiSvgIcon-root": { color: textColor },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderWidth: "2px",
-                  },
                 }}
               >
                 {cities.map((city) => (
