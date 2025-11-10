@@ -7,32 +7,23 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import { Brightness4, Brightness7, AutoMode } from "@mui/icons-material";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
 import WorldClock from "./WorldClock";
 
 export default function App() {
   const [isDay, setIsDay] = useState(true);
-  const [mode, setMode] = useState("auto"); // "auto", "day", "night"
 
   useEffect(() => {
     const checkDay = () => {
-      if (mode === "auto") {
-        const hour = new Date().getHours();
-        setIsDay(hour >= 6 && hour < 18);
-      } else {
-        setIsDay(mode === "day");
-      }
+      const hour = new Date().getHours();
+      setIsDay(hour >= 6 && hour < 18);
     };
     checkDay();
-    const interval = setInterval(checkDay, 60 * 1000);
+    const interval = setInterval(checkDay, 60000);
     return () => clearInterval(interval);
-  }, [mode]);
+  }, []);
 
-  const toggleMode = () => {
-    if (mode === "auto") setMode("day");
-    else if (mode === "day") setMode("night");
-    else setMode("auto");
-  };
+  const toggleTheme = () => setIsDay((prev) => !prev);
 
   return (
     <>
@@ -55,6 +46,31 @@ export default function App() {
           boxSizing: "border-box",
         }}
       >
+        {/* Botón sol/luna */}
+        <Tooltip title={isDay ? "Cambiar a modo noche" : "Cambiar a modo día"}>
+          <IconButton
+            onClick={toggleTheme}
+            sx={{
+              position: "absolute",
+              top: 16,
+              right: 16,
+              color: isDay ? "#FFD700" : "#fff",
+              backgroundColor: isDay
+                ? "rgba(255,255,255,0.4)"
+                : "rgba(255,255,255,0.1)",
+              backdropFilter: "blur(6px)",
+              "&:hover": {
+                backgroundColor: isDay
+                  ? "rgba(255,255,255,0.6)"
+                  : "rgba(255,255,255,0.25)",
+              },
+              transition: "all 0.4s ease",
+            }}
+          >
+            {isDay ? <Brightness7 fontSize="large" /> : <Brightness4 fontSize="large" />}
+          </IconButton>
+        </Tooltip>
+
         <Container
           maxWidth="sm"
           disableGutters
@@ -64,44 +80,6 @@ export default function App() {
             alignItems: "center",
           }}
         >
-          {/* Botón de modo manual */}
-          <Tooltip
-            title={
-              mode === "auto"
-                ? "Modo automático (según hora)"
-                : mode === "day"
-                ? "Modo forzado: Día"
-                : "Modo forzado: Noche"
-            }
-          >
-            <IconButton
-              onClick={toggleMode}
-              sx={{
-                position: "absolute",
-                top: 16,
-                right: 16,
-                color: isDay ? "#0D47A1" : "#fff",
-                backgroundColor: isDay
-                  ? "rgba(255,255,255,0.4)"
-                  : "rgba(255,255,255,0.1)",
-                backdropFilter: "blur(5px)",
-                "&:hover": {
-                  backgroundColor: isDay
-                    ? "rgba(255,255,255,0.6)"
-                    : "rgba(255,255,255,0.2)",
-                },
-              }}
-            >
-              {mode === "auto" ? (
-                <AutoMode />
-              ) : mode === "day" ? (
-                <Brightness7 />
-              ) : (
-                <Brightness4 />
-              )}
-            </IconButton>
-          </Tooltip>
-
           <Typography
             variant="h3"
             component="h1"
