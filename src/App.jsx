@@ -5,7 +5,6 @@ import WorldClock from "./WorldClock";
 export default function App() {
   const [isDay, setIsDay] = useState(true);
 
-  // Detecta si es día o noche según la hora local
   useEffect(() => {
     const checkDay = () => {
       const hour = new Date().getHours();
@@ -21,9 +20,11 @@ export default function App() {
       <CssBaseline />
       <Box
         sx={{
-          minHeight: "100vh",
+          width: "100vw",                // ✅ Garantiza cubrir todo el ancho de la ventana
+          minHeight: "100vh",            // ✅ Cubre toda la altura visible
+          overflowX: "hidden",           // ✅ Evita scrolls o desbordes laterales
           background: isDay
-            ? "linear-gradient(135deg, #4facfe, #00f2fe)" // tonos más vivos y legibles
+            ? "linear-gradient(135deg, #4facfe, #00f2fe)"
             : "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
           display: "flex",
           flexDirection: "column",
@@ -32,10 +33,12 @@ export default function App() {
           textAlign: "center",
           transition: "all 1s ease-in-out",
           p: { xs: 2, sm: 3, md: 4 },
+          boxSizing: "border-box",       // ✅ Evita que los paddings provoquen scroll lateral
         }}
       >
         <Container
           maxWidth="sm"
+          disableGutters                     // ✅ Quita márgenes laterales que genera Container
           sx={{
             display: "flex",
             flexDirection: "column",
