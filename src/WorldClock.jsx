@@ -20,6 +20,12 @@ const cities = [
   { name: "Tokio", timezone: "Asia/Tokyo" },
   { name: "Sídney", timezone: "Australia/Sydney" },
   { name: "Madrid", timezone: "Europe/Madrid" },
+  { name: "París", timezone: "Europe/Paris" },
+  { name: "Los Ángeles", timezone: "America/Los_Angeles" },
+  { name: "Ciudad de México", timezone: "America/Mexico_City" },
+  { name: "Buenos Aires", timezone: "America/Argentina/Buenos_Aires" },
+  { name: "Toronto", timezone: "America/Toronto" },
+  { name: "Roma", timezone: "Europe/Rome" },
 ];
 
 export default function WorldClock() {
@@ -54,7 +60,6 @@ export default function WorldClock() {
   const gradient = isDay
     ? "linear-gradient(135deg, #f2f6fc, #d9e4f5)"
     : "linear-gradient(135deg, #232526, #414345)";
-
   const textColor = isDay ? "#0b2545" : "#fff";
 
   return (
@@ -182,4 +187,4 @@ export default function WorldClock() {
       </Box>
     </motion.div>
   );
-}
+                  }                  
