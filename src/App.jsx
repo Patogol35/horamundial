@@ -1,77 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { CssBaseline, Container, Typography, Box, IconButton } from "@mui/material";
-import { WbSunny, NightsStay, LightMode, DarkMode } from "@mui/icons-material";
+import WorldClock from "./WorldClock";
+import { WbSunny, NightsStay } from "@mui/icons-material";
 import { motion } from "framer-motion";
 
-// --- Lista de ciudades ---
-const cities = [
-  { name: "Quito", timezone: "America/Guayaquil" },
-  { name: "Nueva York", timezone: "America/New_York" },
-  { name: "Londres", timezone: "Europe/London" },
-  { name: "Tokio", timezone: "Asia/Tokyo" },
-  { name: "Sídney", timezone: "Australia/Sydney" },
-  { name: "París", timezone: "Europe/Paris" },
-  { name: "Los Ángeles", timezone: "America/Los_Angeles" },
-  { name: "Buenos Aires", timezone: "America/Argentina/Buenos_Aires" },
-  { name: "Ciudad de México", timezone: "America/Mexico_City" },
-  { name: "Toronto", timezone: "America/Toronto" },
-  { name: "Madrid", timezone: "Europe/Madrid" },
-  { name: "Berlín", timezone: "Europe/Berlin" },
-];
-
-// --- Componente de Reloj Individual ---
-function CityClock({ name, timezone }) {
-  const [time, setTime] = useState(new Date());
-  const hour = time.toLocaleString("en-US", { hour: "2-digit", hour12: false, timeZone: timezone });
-  const isDay = hour >= 6 && hour < 18;
+export default function App() {
+  const [isDay, setIsDay] = useState(true);
 
   useEffect(() => {
-    const interval = setInterval(() => setTime(new Date()), 1000);
+    const checkDay = () => {
+      const hour = new Date().getHours();
+      setIsDay(hour >= 6 && hour < 18);
+    };
+    checkDay();
+    const interval = setInterval(checkDay, 60 * 1000);
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <Box
-      sx={{
-        background: isDay ? "#e3f2fd" : "#0d1b2a",
-        color: isDay ? "#0d47a1" : "#ffffff",
-        borderRadius: 3,
-        p: 2,
-        m: 1,
-        minWidth: 220,
-        boxShadow: isDay
-          ? "0 4px 8px rgba(0,0,0,0.1)"
-          : "0 4px 8px rgba(255,255,255,0.1)",
-        textAlign: "center",
-        transition: "all 0.6s ease",
-      }}
-    >
-      <Typography variant="h6" sx={{ fontWeight: 600 }}>
-        {name}
-      </Typography>
-      <Typography variant="h5" sx={{ fontWeight: 700 }}>
-        {time.toLocaleTimeString("es-ES", { timeZone: timezone })}
-      </Typography>
-      <Box sx={{ mt: 1 }}>
-        {isDay ? (
-          <WbSunny sx={{ color: "#ffb300", fontSize: 28 }} />
-        ) : (
-          <NightsStay sx={{ color: "#90caf9", fontSize: 28 }} />
-        )}
-      </Box>
-    </Box>
-  );
-}
-
-// --- Componente Principal ---
-export default function App() {
-  const [isDayMode, setIsDayMode] = useState(true);
-
-  // Detectar día/noche global
-  useEffect(() => {
-    const hour = new Date().getHours();
-    setIsDayMode(hour >= 6 && hour < 18);
-  }, []);
+  const backgroundColor = isDay ? "#ffffff" : "#0f2027";
+  const textColor = isDay ? "#0D47A1" : "#ffffff";
+  const iconColor = "#ffffff";
 
   return (
     <>
@@ -79,18 +27,18 @@ export default function App() {
       <Box
         sx={{
           minHeight: "100vh",
-          backgroundColor: isDayMode ? "#ffffff" : "#0f2027",
-          color: isDayMode ? "#0D47A1" : "#ffffff",
+          background: backgroundColor,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
           textAlign: "center",
-          transition: "all 0.8s ease",
+          transition: "all 1s ease-in-out",
           p: 3,
-          overflowX: "hidden", // ✅ evita el espacio blanco lateral
+          overflowX: "hidden",
         }}
       >
-        <Container maxWidth="lg" sx={{ overflowX: "hidden" }}>
+        <Container maxWidth="sm">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -98,46 +46,55 @@ export default function App() {
           >
             <Typography
               variant="h4"
+              component="h1"
+              gutterBottom
               sx={{
                 fontWeight: 700,
-                mb: 1,
-                letterSpacing: 0.5,
-                color: isDayMode ? "#0D47A1" : "#fff",
+                color: textColor,
+                textShadow: isDay
+                  ? "0px 0px 6px rgba(0,0,0,0.15)"
+                  : "0px 0px 10px rgba(255,255,255,0.3)",
+                letterSpacing: 1,
+                mb: 2,
+                transition: "color 1s ease",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 1,
               }}
             >
               🌎 Reloj Mundial Interactivo
             </Typography>
-            <Typography variant="subtitle1" sx={{ mb: 3, fontWeight: 500 }}>
+
+            <Typography
+              variant="subtitle1"
+              sx={{
+                color: isDay ? "#555" : "#ddd",
+                mb: 4,
+                fontWeight: 500,
+              }}
+            >
               Creado por <strong>Jorge Patricio Santamaría Cherrez</strong>
             </Typography>
 
             <IconButton
-              onClick={() => setIsDayMode(!isDayMode)}
+              onClick={() => setIsDay(!isDay)}
               sx={{
-                mb: 4,
-                bgcolor: isDayMode ? "#1976d2" : "#333",
-                color: "#fff",
+                mb: 3,
+                bgcolor: isDay ? "#1976d2" : "#333",
+                color: iconColor,
                 borderRadius: "50%",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-                "&:hover": { bgcolor: isDayMode ? "#1565c0" : "#444" },
+                "&:hover": {
+                  bgcolor: isDay ? "#1565c0" : "#444",
+                },
               }}
             >
-              {isDayMode ? <LightMode /> : <DarkMode />}
+              {isDay ? <WbSunny /> : <NightsStay />}
             </IconButton>
           </motion.div>
 
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              maxWidth: "100%",
-            }}
-          >
-            {cities.map((c) => (
-              <CityClock key={c.name} name={c.name} timezone={c.timezone} />
-            ))}
-          </Box>
+          <WorldClock isGlobalDay={isDay} />
         </Container>
       </Box>
     </>
