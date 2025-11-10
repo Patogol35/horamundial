@@ -6,6 +6,7 @@ import WorldClock from "./WorldClock";
 export default function App() {
   const [isDay, setIsDay] = useState(true);
 
+  // Detecta si es día o noche según la hora local
   useEffect(() => {
     const checkDay = () => {
       const hour = new Date().getHours();
@@ -16,7 +17,10 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const toggleMode = () => setIsDay(!isDay);
+  // Fondo más contrastado y sin espacio blanco lateral
+  const background = isDay
+    ? "linear-gradient(135deg, #b3e5fc, #e1f5fe)"
+    : "linear-gradient(135deg, #0f2027, #203a43, #2c5364)";
 
   return (
     <>
@@ -24,17 +28,15 @@ export default function App() {
       <Box
         sx={{
           minHeight: "100vh",
-          width: "100vw",
-          background: isDay
-            ? "linear-gradient(135deg, #8ec5fc, #e0c3fc)"
-            : "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
+          width: "100%",
+          overflowX: "hidden",
+          background,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
           transition: "all 1s ease-in-out",
-          overflowX: "hidden",
           p: 3,
         }}
       >
@@ -47,38 +49,30 @@ export default function App() {
               fontWeight: 700,
               color: isDay ? "#0D47A1" : "#fff",
               textShadow: isDay
-                ? "0px 0px 6px rgba(255,255,255,0.6)"
-                : "0px 0px 10px rgba(0,0,0,0.8)",
+                ? "0px 0px 4px rgba(0,0,0,0.2)"
+                : "0px 0px 10px rgba(0,0,0,0.7)",
               letterSpacing: 1,
-              mb: 3,
-              transition: "color 1s ease",
+              mb: 4,
+              transition: "color 0.5s ease",
             }}
           >
             🌎 Reloj Mundial Interactivo
           </Typography>
 
+          {/* Botón modo día/noche */}
           <IconButton
-            onClick={toggleMode}
+            onClick={() => setIsDay((prev) => !prev)}
             sx={{
-              color: "#fff",
-              background: "rgba(255,255,255,0.15)",
-              backdropFilter: "blur(8px)",
-              borderRadius: "50%",
               mb: 3,
-              "&:hover": {
-                background: "rgba(255,255,255,0.3)",
-              },
-              transition: "all 0.3s ease",
+              color: "#fff",
+              bgcolor: "rgba(255,255,255,0.1)",
+              "&:hover": { bgcolor: "rgba(255,255,255,0.25)" },
             }}
           >
-            {isDay ? (
-              <NightsStay sx={{ fontSize: 30, color: "#fff" }} />
-            ) : (
-              <WbSunny sx={{ fontSize: 30, color: "#fff" }} />
-            )}
+            {isDay ? <WbSunny sx={{ fontSize: 40 }} /> : <NightsStay sx={{ fontSize: 40 }} />}
           </IconButton>
 
-          <WorldClock isDay={isDay} />
+          <WorldClock forceDay={isDay} />
         </Container>
       </Box>
     </>
