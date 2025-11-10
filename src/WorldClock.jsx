@@ -11,7 +11,7 @@ import {
   Chip,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { AccessTime, WbSunny, NightsStay } from "@mui/icons-material";
+import { AccessTime } from "@mui/icons-material";
 
 const cities = [
   { name: "Quito", timezone: "America/Guayaquil" },
@@ -20,18 +20,16 @@ const cities = [
   { name: "Tokio", timezone: "Asia/Tokyo" },
   { name: "Sídney", timezone: "Australia/Sydney" },
   { name: "Madrid", timezone: "Europe/Madrid" },
-  { name: "París", timezone: "Europe/Paris" },
   { name: "Los Ángeles", timezone: "America/Los_Angeles" },
-  { name: "México DF", timezone: "America/Mexico_City" },
-  { name: "Buenos Aires", timezone: "America/Argentina/Buenos_Aires" },
   { name: "Toronto", timezone: "America/Toronto" },
-  { name: "Dubái", timezone: "Asia/Dubai" },
+  { name: "Buenos Aires", timezone: "America/Argentina/Buenos_Aires" },
+  { name: "París", timezone: "Europe/Paris" },
 ];
 
-export default function WorldClock({ isDay }) {
+export default function WorldClock({ forceDay }) {
   const [selectedCity, setSelectedCity] = useState(cities[0]);
   const [time, setTime] = useState("");
-  const [cityIsDay, setCityIsDay] = useState(true);
+  const [isDay, setIsDay] = useState(true);
 
   useEffect(() => {
     const updateClock = () => {
@@ -49,7 +47,7 @@ export default function WorldClock({ isDay }) {
       const hourInCity = new Date(
         now.toLocaleString("en-US", { timeZone: selectedCity.timezone })
       ).getHours();
-      setCityIsDay(hourInCity >= 6 && hourInCity < 18);
+      setIsDay(hourInCity >= 6 && hourInCity < 18);
     };
 
     updateClock();
@@ -57,9 +55,13 @@ export default function WorldClock({ isDay }) {
     return () => clearInterval(interval);
   }, [selectedCity]);
 
-  const gradient = cityIsDay
-    ? "linear-gradient(135deg, #a1c4fd, #c2e9fb)"
+  const dayState = forceDay ? true : isDay;
+
+  const gradient = dayState
+    ? "linear-gradient(135deg, #cfd9df, #e2ebf0)"
     : "linear-gradient(135deg, #232526, #414345)";
+
+  const textColor = dayState ? "#1b2735" : "#fff";
 
   return (
     <motion.div
@@ -72,9 +74,8 @@ export default function WorldClock({ isDay }) {
         sx={{
           background: gradient,
           borderRadius: 4,
-          boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
           p: 3,
-          backdropFilter: "blur(10px)",
           maxWidth: 420,
           mx: "auto",
           transition: "background 1s ease",
@@ -82,33 +83,24 @@ export default function WorldClock({ isDay }) {
       >
         <Card
           sx={{
-            background: "rgba(255,255,255,0.15)",
+            background: dayState
+              ? "rgba(255,255,255,0.6)"
+              : "rgba(255,255,255,0.1)",
             backdropFilter: "blur(12px)",
             borderRadius: 4,
-            color: cityIsDay ? "#0D47A1" : "#fff",
+            color: textColor,
             boxShadow: "0 4px 25px rgba(0,0,0,0.3)",
           }}
         >
           <CardContent>
-            <motion.div
-              initial={{ rotate: 0 }}
-              animate={{ rotate: cityIsDay ? 0 : 180 }}
-              transition={{ duration: 1 }}
-            >
-              {cityIsDay ? (
-                <WbSunny sx={{ fontSize: 60, color: "#fff" }} />
-              ) : (
-                <NightsStay sx={{ fontSize: 60, color: "#fff" }} />
-              )}
-            </motion.div>
-
             <Typography
               variant="h4"
               sx={{
-                mt: 2,
+                mt: 1,
                 mb: 1,
                 fontWeight: "bold",
-                letterSpacing: 0.5,
+                color: textColor,
+                textAlign: "center",
               }}
             >
               {selectedCity.name}
@@ -121,61 +113,34 @@ export default function WorldClock({ isDay }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                color: textColor,
               }}
             >
-              <AccessTime sx={{ mr: 1 }} /> {time}
+              <AccessTime sx={{ mr: 1, color: textColor }} /> {time}
             </Typography>
 
             <Chip
-              label={cityIsDay ? "☀️ Día" : "🌙 Noche"}
+              label={dayState ? "☀️ Día" : "🌙 Noche"}
               sx={{
-                bgcolor: cityIsDay
-                  ? "rgba(255,255,255,0.2)"
-                  : "rgba(0,0,0,0.3)",
-                color: "#fff",
+                bgcolor: dayState ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.3)",
+                color: textColor,
                 mb: 2,
                 fontWeight: "bold",
               }}
             />
 
-            {/* --- Selector sin brillo y etiqueta visible --- */}
-            <FormControl
-              fullWidth
-              variant="outlined"
-              sx={{
-                mt: 3,
-                "& .MuiInputLabel-root": {
-                  color: "#fff !important",
+            {/* Selector mejorado */}
+            <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+              <InputLabel
+                shrink
+                sx={{
+                  color: textColor,
                   fontWeight: "bold",
-                  fontSize: "1rem",
-                  zIndex: 2,
-                },
-                "& .MuiOutlinedInput-root": {
-                  borderRadius: "12px",
-                  background: "rgba(255,255,255,0.12)",
-                  backdropFilter: "blur(8px)",
-                  "& fieldset": {
-                    borderColor: "rgba(255,255,255,0.3)",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "rgba(255,255,255,0.6)",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "rgba(255,255,255,0.6)",
-                    boxShadow: "none",
-                  },
-                },
-                "& .MuiSelect-icon": {
-                  color: "#fff",
-                },
-                "& .MuiSelect-select": {
-                  color: "#fff",
-                  fontWeight: 500,
-                  py: 1.2,
-                },
-              }}
-            >
-              <InputLabel>Ciudad</InputLabel>
+                  "&.Mui-focused": { color: textColor },
+                }}
+              >
+                Ciudad
+              </InputLabel>
               <Select
                 value={selectedCity.name}
                 label="Ciudad"
@@ -184,6 +149,23 @@ export default function WorldClock({ isDay }) {
                     cities.find((city) => city.name === e.target.value)
                   )
                 }
+                sx={{
+                  color: textColor,
+                  bgcolor: dayState
+                    ? "rgba(255,255,255,0.9)"
+                    : "rgba(255,255,255,0.15)",
+                  borderRadius: 2,
+                  ".MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgba(255,255,255,0.4)",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgba(255,255,255,0.7)",
+                  },
+                  ".MuiSvgIcon-root": { color: textColor },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderWidth: "2px",
+                  },
+                }}
               >
                 {cities.map((city) => (
                   <MenuItem key={city.name} value={city.name}>
