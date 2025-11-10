@@ -1,26 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { CssBaseline, Container, Typography, Box } from "@mui/material";
+import {
+  CssBaseline,
+  Container,
+  Typography,
+  Box,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
+import { Brightness4, Brightness7, AutoMode } from "@mui/icons-material";
 import WorldClock from "./WorldClock";
 
 export default function App() {
   const [isDay, setIsDay] = useState(true);
+  const [mode, setMode] = useState("auto"); // "auto", "day", "night"
 
   useEffect(() => {
     const checkDay = () => {
-      const hour = new Date().getHours();
-      setIsDay(hour >= 6 && hour < 18);
+      if (mode === "auto") {
+        const hour = new Date().getHours();
+        setIsDay(hour >= 6 && hour < 18);
+      } else {
+        setIsDay(mode === "day");
+      }
     };
     checkDay();
     const interval = setInterval(checkDay, 60 * 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [mode]);
+
+  const toggleMode = () => {
+    if (mode === "auto") setMode("day");
+    else if (mode === "day") setMode("night");
+    else setMode("auto");
+  };
 
   return (
     <>
       <CssBaseline />
       <Box
         sx={{
-          position: "relative",
           width: "100vw",
           minHeight: "100vh",
           overflowX: "hidden",
@@ -37,21 +55,6 @@ export default function App() {
           boxSizing: "border-box",
         }}
       >
-        {/* Fondo animado */}
-        <Box
-          className={isDay ? "clouds-bg" : "stars-bg"}
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: 0,
-            overflow: "hidden",
-            pointerEvents: "none",
-          }}
-        />
-
         <Container
           maxWidth="sm"
           disableGutters
@@ -59,10 +62,46 @@ export default function App() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            position: "relative",
-            zIndex: 2,
           }}
         >
+          {/* Botón de modo manual */}
+          <Tooltip
+            title={
+              mode === "auto"
+                ? "Modo automático (según hora)"
+                : mode === "day"
+                ? "Modo forzado: Día"
+                : "Modo forzado: Noche"
+            }
+          >
+            <IconButton
+              onClick={toggleMode}
+              sx={{
+                position: "absolute",
+                top: 16,
+                right: 16,
+                color: isDay ? "#0D47A1" : "#fff",
+                backgroundColor: isDay
+                  ? "rgba(255,255,255,0.4)"
+                  : "rgba(255,255,255,0.1)",
+                backdropFilter: "blur(5px)",
+                "&:hover": {
+                  backgroundColor: isDay
+                    ? "rgba(255,255,255,0.6)"
+                    : "rgba(255,255,255,0.2)",
+                },
+              }}
+            >
+              {mode === "auto" ? (
+                <AutoMode />
+              ) : mode === "day" ? (
+                <Brightness7 />
+              ) : (
+                <Brightness4 />
+              )}
+            </IconButton>
+          </Tooltip>
+
           <Typography
             variant="h3"
             component="h1"
@@ -82,43 +121,9 @@ export default function App() {
             🌎 Reloj Mundial Interactivo
           </Typography>
 
-          <WorldClock />
+          <WorldClock isDay={isDay} />
         </Container>
       </Box>
-
-      {/* Animaciones CSS */}
-      <style>
-        {`
-          /* ---- Fondo con nubes (día) ---- */
-          .clouds-bg {
-            background: url('https://i.imgur.com/44xQb1r.png') repeat-x;
-            animation: moveClouds 60s linear infinite;
-            opacity: 0.15;
-          }
-
-          @keyframes moveClouds {
-            from { background-position: 0 0; }
-            to { background-position: -1000px 0; }
-          }
-
-          /* ---- Fondo con estrellas (noche) ---- */
-          .stars-bg {
-            background: url('https://i.imgur.com/9aKp2GQ.png') repeat;
-            animation: twinkle 6s ease-in-out infinite alternate;
-            opacity: 0.25;
-          }
-
-          @keyframes twinkle {
-            0% { opacity: 0.15; transform: scale(1); }
-            100% { opacity: 0.35; transform: scale(1.02); }
-          }
-
-          body {
-            margin: 0;
-            overflow-x: hidden;
-          }
-        `}
-      </style>
     </>
   );
 }
