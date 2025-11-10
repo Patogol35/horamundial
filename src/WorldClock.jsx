@@ -61,8 +61,6 @@ export default function WorldClock({ isDay }) {
     ? "linear-gradient(135deg, #a1c4fd, #c2e9fb)"
     : "linear-gradient(135deg, #232526, #414345)";
 
-  const iconColor = "#FFD700";
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -98,9 +96,9 @@ export default function WorldClock({ isDay }) {
               transition={{ duration: 1 }}
             >
               {cityIsDay ? (
-                <WbSunny sx={{ fontSize: 60, color: iconColor }} />
+                <WbSunny sx={{ fontSize: 60, color: "#fff" }} />
               ) : (
-                <NightsStay sx={{ fontSize: 60, color: iconColor }} />
+                <NightsStay sx={{ fontSize: 60, color: "#fff" }} />
               )}
             </motion.div>
 
@@ -140,30 +138,31 @@ export default function WorldClock({ isDay }) {
               }}
             />
 
-            {/* --- Selector Mejorado --- */}
+            {/* --- Selector sin brillo y etiqueta visible --- */}
             <FormControl
               fullWidth
               variant="outlined"
               sx={{
                 mt: 3,
                 "& .MuiInputLabel-root": {
-                  color: "#fff",
+                  color: "#fff !important",
                   fontWeight: "bold",
                   fontSize: "1rem",
+                  zIndex: 2,
                 },
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "12px",
                   background: "rgba(255,255,255,0.12)",
                   backdropFilter: "blur(8px)",
                   "& fieldset": {
-                    borderColor: "rgba(255,255,255,0.4)",
+                    borderColor: "rgba(255,255,255,0.3)",
                   },
                   "&:hover fieldset": {
-                    borderColor: "#fff",
+                    borderColor: "rgba(255,255,255,0.6)",
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: "#fff",
-                    boxShadow: "0 0 8px rgba(255,255,255,0.4)",
+                    borderColor: "rgba(255,255,255,0.6)",
+                    boxShadow: "none",
                   },
                 },
                 "& .MuiSelect-icon": {
