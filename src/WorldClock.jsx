@@ -22,10 +22,10 @@ const cities = [
   { name: "Madrid", timezone: "Europe/Madrid" },
 ];
 
-export default function WorldClock() {
+export default function WorldClock({ isDay }) {
   const [selectedCity, setSelectedCity] = useState(cities[0]);
   const [time, setTime] = useState("");
-  const [isDay, setIsDay] = useState(true);
+  const [isDayInCity, setIsDayInCity] = useState(true);
 
   useEffect(() => {
     const updateClock = () => {
@@ -43,7 +43,7 @@ export default function WorldClock() {
       const hourInCity = new Date(
         now.toLocaleString("en-US", { timeZone: selectedCity.timezone })
       ).getHours();
-      setIsDay(hourInCity >= 6 && hourInCity < 18);
+      setIsDayInCity(hourInCity >= 6 && hourInCity < 18);
     };
 
     updateClock();
@@ -51,11 +51,11 @@ export default function WorldClock() {
     return () => clearInterval(interval);
   }, [selectedCity]);
 
-  const gradient = isDay
-    ? "linear-gradient(135deg, #5b86e5, #36d1dc)" // colores diurnos más legibles
+  const gradient = isDayInCity
+    ? "linear-gradient(135deg, #5b86e5, #36d1dc)"
     : "linear-gradient(135deg, #232526, #414345)";
 
-  const iconColor = isDay ? "#FFD700" : "#B0E0E6";
+  const iconColor = isDayInCity ? "#FFD700" : "#B0E0E6";
 
   return (
     <motion.div
@@ -87,10 +87,10 @@ export default function WorldClock() {
           <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
             <motion.div
               initial={{ rotate: 0 }}
-              animate={{ rotate: isDay ? 0 : 180 }}
+              animate={{ rotate: isDayInCity ? 0 : 180 }}
               transition={{ duration: 1 }}
             >
-              {isDay ? (
+              {isDayInCity ? (
                 <WbSunny sx={{ fontSize: 60, color: iconColor }} />
               ) : (
                 <NightsStay sx={{ fontSize: 60, color: iconColor }} />
@@ -125,9 +125,11 @@ export default function WorldClock() {
             </Typography>
 
             <Chip
-              label={isDay ? "☀️ Día" : "🌙 Noche"}
+              label={isDayInCity ? "☀️ Día" : "🌙 Noche"}
               sx={{
-                bgcolor: isDay ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.4)",
+                bgcolor: isDayInCity
+                  ? "rgba(255,255,255,0.25)"
+                  : "rgba(0,0,0,0.4)",
                 color: "#fff",
                 mb: 2,
                 fontWeight: "bold",
@@ -135,7 +137,15 @@ export default function WorldClock() {
             />
 
             <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-              <InputLabel sx={{ color: "#fff" }}>
+              <InputLabel
+                sx={{
+                  color: "#fff",
+                  "&.Mui-focused": { color: "#fff" }, // ✅ visible al enfocar
+                  backgroundColor: "rgba(0,0,0,0.2)",
+                  px: 1,
+                  borderRadius: 1,
+                }}
+              >
                 <Public sx={{ mr: 1, verticalAlign: "middle" }} /> Ciudad
               </InputLabel>
               <Select
@@ -170,4 +180,4 @@ export default function WorldClock() {
       </Box>
     </motion.div>
   );
-                    }
+}
