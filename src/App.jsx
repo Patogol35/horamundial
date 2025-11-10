@@ -23,7 +23,7 @@ export default function App() {
         sx={{
           minHeight: "100vh",
           background: isDay
-            ? "linear-gradient(135deg, #6dd5fa, #ffffff)"
+            ? "linear-gradient(135deg, #4facfe, #00f2fe)" // tonos más vivos y legibles
             : "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
           display: "flex",
           flexDirection: "column",
@@ -31,27 +31,36 @@ export default function App() {
           justifyContent: "center",
           textAlign: "center",
           transition: "all 1s ease-in-out",
-          p: 3,
+          p: { xs: 2, sm: 3, md: 4 },
         }}
       >
-        <Container maxWidth="sm">
+        <Container
+          maxWidth="sm"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <Typography
             variant="h3"
             component="h1"
             gutterBottom
             sx={{
-              fontWeight: 700,
-              color: isDay ? "#0D47A1" : "#fff",
+              fontWeight: 800,
+              color: isDay ? "#08306b" : "#ffffff",
               textShadow: isDay
-                ? "0px 0px 6px rgba(255,255,255,0.4)"
-                : "0px 0px 12px rgba(0,0,0,0.7)",
+                ? "0 2px 4px rgba(255,255,255,0.5)"
+                : "0 2px 6px rgba(0,0,0,0.8)",
               letterSpacing: 1,
-              mb: 5,
-              transition: "color 1s ease",
+              mb: { xs: 3, sm: 5 },
+              fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+              transition: "color 0.5s ease",
             }}
           >
             🌎 Reloj Mundial Interactivo
           </Typography>
+
           <WorldClock />
         </Container>
       </Box>
