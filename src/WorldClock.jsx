@@ -52,9 +52,10 @@ export default function WorldClock({ forceDay }) {
   }, [selectedCity]);
 
   const gradient = isDay
-    ? "linear-gradient(135deg, #bbdefb, #e3f2fd)" // colores suaves y legibles
-    : "linear-gradient(135deg, #232526, #414345)";
+    ? "linear-gradient(135deg, #e3f2fd, #bbdefb)" // día: suave azul claro
+    : "linear-gradient(135deg, #232526, #414345)"; // noche
 
+  const textColor = isDay ? "#0D47A1" : "#fff"; // contraste dinámico
   const iconColor = isDay ? "#fdd835" : "#b0e0e6";
 
   return (
@@ -72,15 +73,17 @@ export default function WorldClock({ forceDay }) {
           p: 3,
           maxWidth: 420,
           mx: "auto",
-          transition: "background 1s ease",
+          transition: "background 1s ease, color 0.5s ease",
         }}
       >
         <Card
           sx={{
-            background: "rgba(255,255,255,0.1)",
+            background: isDay
+              ? "rgba(255,255,255,0.35)"
+              : "rgba(255,255,255,0.1)",
             backdropFilter: "blur(8px)",
             borderRadius: 4,
-            color: "#fff",
+            color: textColor,
             boxShadow: "0 4px 25px rgba(0,0,0,0.3)",
           }}
         >
@@ -104,7 +107,10 @@ export default function WorldClock({ forceDay }) {
                 mb: 1,
                 fontWeight: "bold",
                 letterSpacing: 0.5,
-                color: "#fff",
+                color: textColor,
+                textShadow: isDay
+                  ? "0 0 5px rgba(255,255,255,0.5)"
+                  : "0 0 6px rgba(0,0,0,0.6)",
               }}
             >
               {selectedCity.name}
@@ -117,6 +123,8 @@ export default function WorldClock({ forceDay }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                color: textColor,
+                fontWeight: 500,
               }}
             >
               <AccessTime sx={{ mr: 1 }} /> {time}
@@ -125,8 +133,8 @@ export default function WorldClock({ forceDay }) {
             <Chip
               label={isDay ? "☀️ Día" : "🌙 Noche"}
               sx={{
-                bgcolor: isDay ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.3)",
-                color: "#fff",
+                bgcolor: isDay ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.2)",
+                color: textColor,
                 mb: 2,
                 fontWeight: "bold",
               }}
@@ -139,30 +147,33 @@ export default function WorldClock({ forceDay }) {
               sx={{
                 mt: 3,
                 "& .MuiInputLabel-root": {
-                  color: "#fff",
+                  color: textColor,
                   fontWeight: "bold",
                   fontSize: "1rem",
                 },
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "10px",
-                  background: "rgba(255,255,255,0.15)",
-                  backdropFilter: "blur(8px)",
+                  background: isDay
+                    ? "rgba(255,255,255,0.4)"
+                    : "rgba(255,255,255,0.15)",
                   "& fieldset": {
-                    borderColor: "rgba(255,255,255,0.5)",
+                    borderColor: isDay
+                      ? "rgba(0,0,0,0.3)"
+                      : "rgba(255,255,255,0.5)",
                   },
                   "&:hover fieldset": {
-                    borderColor: "#fff",
+                    borderColor: textColor,
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: "#fff",
-                    boxShadow: "0 0 8px rgba(255,255,255,0.3)",
+                    borderColor: textColor,
+                    boxShadow: `0 0 8px ${isDay ? "#90caf9" : "#fff"}`,
                   },
                 },
                 "& .MuiSelect-icon": {
-                  color: "#fff",
+                  color: textColor,
                 },
                 "& .MuiSelect-select": {
-                  color: "#fff",
+                  color: textColor,
                   fontWeight: 500,
                   py: 1.2,
                 },
@@ -180,8 +191,10 @@ export default function WorldClock({ forceDay }) {
                 MenuProps={{
                   PaperProps: {
                     sx: {
-                      background: "rgba(40,40,40,0.9)",
-                      color: "#fff",
+                      background: isDay
+                        ? "rgba(255,255,255,0.9)"
+                        : "rgba(40,40,40,0.95)",
+                      color: isDay ? "#0D47A1" : "#fff",
                       borderRadius: "10px",
                       mt: 1,
                     },
@@ -200,4 +213,4 @@ export default function WorldClock({ forceDay }) {
       </Box>
     </motion.div>
   );
-    }
+}
