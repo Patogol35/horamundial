@@ -66,11 +66,16 @@ export default function App() {
               borderRadius: "50%",
               mb: 3,
               "&:hover": {
-                background: "rgba(255,255,255,0.25)",
+                background: "rgba(255,255,255,0.3)",
               },
+              transition: "all 0.3s ease",
             }}
           >
-            {isDay ? <NightsStay sx={{ fontSize: 30, color: "#FFD700" }} /> : <WbSunny sx={{ fontSize: 30, color: "#FFD700" }} />}
+            {isDay ? (
+              <NightsStay sx={{ fontSize: 30, color: "#fff" }} />
+            ) : (
+              <WbSunny sx={{ fontSize: 30, color: "#fff" }} />
+            )}
           </IconButton>
 
           <WorldClock isDay={isDay} />
