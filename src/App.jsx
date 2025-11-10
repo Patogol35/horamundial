@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { CssBaseline, Container, Typography, Box, IconButton } from "@mui/material";
-import { WbSunny, NightsStay } from "@mui/icons-material";
+import { CssBaseline, Container, Typography, Box, IconButton, Stack } from "@mui/material";
+import { WbSunny, NightsStay, Public } from "@mui/icons-material";
 import WorldClock from "./WorldClock";
 
 export default function App() {
@@ -17,10 +17,8 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Fondo más contrastado y sin espacio blanco lateral
-  const background = isDay
-    ? "linear-gradient(135deg, #b3e5fc, #e1f5fe)"
-    : "linear-gradient(135deg, #0f2027, #203a43, #2c5364)";
+  // Fondo blanco limpio
+  const background = "#ffffff";
 
   return (
     <>
@@ -41,38 +39,53 @@ export default function App() {
         }}
       >
         <Container maxWidth="sm">
-          <Typography
-            variant="h3"
-            component="h1"
-            gutterBottom
-            sx={{
-              fontWeight: 700,
-              color: isDay ? "#0D47A1" : "#fff",
-              textShadow: isDay
-                ? "0px 0px 4px rgba(0,0,0,0.2)"
-                : "0px 0px 10px rgba(0,0,0,0.7)",
-              letterSpacing: 1,
-              mb: 4,
-              transition: "color 0.5s ease",
-            }}
-          >
-            🌎 Reloj Mundial Interactivo
-          </Typography>
+          {/* Título con icono del mundo y autor */}
+          <Stack direction="column" alignItems="center" spacing={1}>
+            <Typography
+              variant="h3"
+              component="h1"
+              gutterBottom
+              sx={{
+                fontWeight: 700,
+                color: "#0D47A1",
+                textShadow: "0px 0px 6px rgba(0,0,0,0.1)",
+                letterSpacing: 1,
+                mb: 1,
+              }}
+            >
+              <Public sx={{ fontSize: 40, mr: 1, verticalAlign: "middle" }} />{" "}
+              Reloj Mundial Interactivo
+            </Typography>
+
+            {/* Autor */}
+            <Typography
+              variant="subtitle1"
+              sx={{
+                color: "#444",
+                fontStyle: "italic",
+                fontWeight: 500,
+                mt: -1,
+              }}
+            >
+              Creado por Jorge Patricio Santamaría Cherrez
+            </Typography>
+          </Stack>
 
           {/* Botón modo día/noche */}
           <IconButton
             onClick={() => setIsDay((prev) => !prev)}
             sx={{
+              mt: 3,
               mb: 3,
               color: "#fff",
-              bgcolor: "rgba(255,255,255,0.1)",
-              "&:hover": { bgcolor: "rgba(255,255,255,0.25)" },
+              bgcolor: "rgba(0,0,0,0.6)",
+              "&:hover": { bgcolor: "rgba(0,0,0,0.8)" },
             }}
           >
-            {isDay ? <WbSunny sx={{ fontSize: 40 }} /> : <NightsStay sx={{ fontSize: 40 }} />}
+            {isDay ? <WbSunny sx={{ fontSize: 40, color: "#fff" }} /> : <NightsStay sx={{ fontSize: 40, color: "#fff" }} />}
           </IconButton>
 
-          <WorldClock forceDay={isDay} />
+          <WorldClock />
         </Container>
       </Box>
     </>
