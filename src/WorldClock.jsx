@@ -11,7 +11,7 @@ import {
   Chip,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { AccessTime, WbSunny, NightsStay, Public } from "@mui/icons-material";
+import { AccessTime, Public } from "@mui/icons-material";
 
 const cities = [
   { name: "Quito", timezone: "America/Guayaquil" },
@@ -22,10 +22,9 @@ const cities = [
   { name: "Madrid", timezone: "Europe/Madrid" },
 ];
 
-export default function WorldClock({ forcedTheme }) {
+export default function WorldClock({ isDay }) {
   const [selectedCity, setSelectedCity] = useState(cities[0]);
   const [time, setTime] = useState("");
-  const [isDay, setIsDay] = useState(true);
 
   useEffect(() => {
     const updateClock = () => {
@@ -37,28 +36,16 @@ export default function WorldClock({ forcedTheme }) {
         second: "2-digit",
         hour12: true,
       };
-      const formatter = new Intl.DateTimeFormat([], options);
-      setTime(formatter.format(now));
-
-      const hourInCity = new Date(
-        now.toLocaleString("en-US", { timeZone: selectedCity.timezone })
-      ).getHours();
-
-      setIsDay(hourInCity >= 6 && hourInCity < 18);
+      setTime(new Intl.DateTimeFormat([], options).format(now));
     };
-
     updateClock();
     const interval = setInterval(updateClock, 1000);
     return () => clearInterval(interval);
   }, [selectedCity]);
 
-  // Permite forzar el modo global desde App
-  const themeMode = forcedTheme === "day" ? true : forcedTheme === "night" ? false : isDay;
-
-  const gradient = themeMode
+  const gradient = isDay
     ? "linear-gradient(135deg, #a1c4fd, #c2e9fb)"
     : "linear-gradient(135deg, #232526, #414345)";
-  const iconColor = themeMode ? "#FFD700" : "#B0E0E6";
 
   return (
     <motion.div
@@ -89,22 +76,10 @@ export default function WorldClock({ forcedTheme }) {
           }}
         >
           <CardContent>
-            <motion.div
-              initial={{ rotate: 0 }}
-              animate={{ rotate: themeMode ? 0 : 180 }}
-              transition={{ duration: 1 }}
-            >
-              {themeMode ? (
-                <WbSunny sx={{ fontSize: 60, color: iconColor }} />
-              ) : (
-                <NightsStay sx={{ fontSize: 60, color: iconColor }} />
-              )}
-            </motion.div>
-
             <Typography
               variant="h4"
               sx={{
-                mt: 2,
+                mt: 1,
                 mb: 1,
                 fontWeight: "bold",
                 letterSpacing: 0.5,
@@ -127,11 +102,9 @@ export default function WorldClock({ forcedTheme }) {
             </Typography>
 
             <Chip
-              label={themeMode ? "☀️ Día" : "🌙 Noche"}
+              label={isDay ? "☀️ Día" : "🌙 Noche"}
               sx={{
-                bgcolor: themeMode
-                  ? "rgba(255,255,255,0.2)"
-                  : "rgba(0,0,0,0.3)",
+                bgcolor: isDay ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.3)",
                 color: "#fff",
                 mb: 2,
                 fontWeight: "bold",
