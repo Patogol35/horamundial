@@ -1,18 +1,20 @@
-import React, { useState } from "react";
-import {
-  CssBaseline,
-  Container,
-  Typography,
-  Box,
-  IconButton,
-  Tooltip,
-} from "@mui/material";
-import { WbSunny, NightsStay } from "@mui/icons-material";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { CssBaseline, Container, Typography, Box } from "@mui/material";
 import WorldClock from "./WorldClock";
 
 export default function App() {
-  const [isDay, setIsDay] = useState(false); // Quito de noche por defecto
+  const [isDay, setIsDay] = useState(true);
+
+  // Detecta si es día o noche según la hora local
+  useEffect(() => {
+    const checkDay = () => {
+      const hour = new Date().getHours();
+      setIsDay(hour >= 6 && hour < 18);
+    };
+    checkDay();
+    const interval = setInterval(checkDay, 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -33,53 +35,24 @@ export default function App() {
         }}
       >
         <Container maxWidth="sm">
-          <Box
+          <Typography
+            variant="h3"
+            component="h1"
+            gutterBottom
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              mb: 4,
+              fontWeight: 700,
+              color: isDay ? "#0D47A1" : "#fff",
+              textShadow: isDay
+                ? "0px 0px 6px rgba(255,255,255,0.4)"
+                : "0px 0px 12px rgba(0,0,0,0.7)",
+              letterSpacing: 1,
+              mb: 5,
+              transition: "color 1s ease",
             }}
           >
-            <Typography
-              variant="h3"
-              component="h1"
-              sx={{
-                fontWeight: 700,
-                color: isDay ? "#0D47A1" : "#fff",
-                textShadow: isDay
-                  ? "0px 0px 6px rgba(255,255,255,0.4)"
-                  : "0px 0px 12px rgba(0,0,0,0.7)",
-                letterSpacing: 1,
-                transition: "color 1s ease",
-              }}
-            >
-              🌎 Reloj Mundial
-            </Typography>
-
-            <Tooltip title={isDay ? "Cambiar a modo noche" : "Cambiar a modo día"}>
-              <IconButton
-                onClick={() => setIsDay(!isDay)}
-                sx={{
-                  color: isDay ? "#FFD700" : "#B0E0E6",
-                  transition: "transform 0.5s ease",
-                  "&:hover": {
-                    transform: "rotate(25deg) scale(1.2)",
-                  },
-                }}
-              >
-                {isDay ? <WbSunny fontSize="large" /> : <NightsStay fontSize="large" />}
-              </IconButton>
-            </Tooltip>
-          </Box>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <WorldClock isDay={isDay} />
-          </motion.div>
+            🌎 Reloj Mundial Interactivo
+          </Typography>
+          <WorldClock />
         </Container>
       </Box>
     </>
