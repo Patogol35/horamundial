@@ -11,7 +11,7 @@ import {
   Chip,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { AccessTime, WbSunny, NightsStay } from "@mui/icons-material";
+import { AccessTime, WbSunny, DarkMode } from "@mui/icons-material";
 
 const cities = [
   { name: "Quito", timezone: "America/Guayaquil" },
@@ -61,7 +61,7 @@ export default function WorldClock({ isGlobalDay }) {
     ? "linear-gradient(135deg, #e3f2fd, #bbdefb)"
     : "linear-gradient(135deg, #141e30, #243b55)";
   const textColor = isDay ? "#0b2545" : "#ffffff";
-  const iconColor = isDay ? "#FFD700" : "#ffffff"; // 🌞 dorado, 🌙 blanco
+  const iconColor = isDay ? "#FFD700" : "#ffffff"; // 🌞 dorado / 🌙 blanco
 
   return (
     <motion.div
@@ -94,16 +94,22 @@ export default function WorldClock({ isGlobalDay }) {
           }}
         >
           <CardContent sx={{ textAlign: "center" }}>
-            {/* Ícono visible y con color correcto */}
+            {/* Ícono día/noche animado */}
             <motion.div
-              initial={{ rotate: 0 }}
-              animate={{ rotate: isDay ? 0 : 180 }}
-              transition={{ duration: 1 }}
+              animate={{
+                rotate: isDay ? 0 : 180,
+                y: [0, -5, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
             >
               {isDay ? (
                 <WbSunny sx={{ fontSize: 60, color: iconColor }} />
               ) : (
-                <NightsStay sx={{ fontSize: 60, color: iconColor }} />
+                <DarkMode sx={{ fontSize: 60, color: iconColor }} />
               )}
             </motion.div>
 
@@ -216,4 +222,4 @@ export default function WorldClock({ isGlobalDay }) {
       </Box>
     </motion.div>
   );
-                      }
+}
