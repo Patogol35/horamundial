@@ -22,10 +22,10 @@ const cities = [
   { name: "Madrid", timezone: "Europe/Madrid" },
 ];
 
-export default function WorldClock() {
+export default function WorldClock({ forceDay }) {
   const [selectedCity, setSelectedCity] = useState(cities[0]);
   const [time, setTime] = useState("");
-  const [isDay, setIsDay] = useState(true);
+  const [isDay, setIsDay] = useState(forceDay);
 
   useEffect(() => {
     const updateClock = () => {
@@ -52,10 +52,10 @@ export default function WorldClock() {
   }, [selectedCity]);
 
   const gradient = isDay
-    ? "linear-gradient(135deg, #a1c4fd, #c2e9fb)"
+    ? "linear-gradient(135deg, #bbdefb, #e3f2fd)" // colores suaves y legibles
     : "linear-gradient(135deg, #232526, #414345)";
 
-  const iconColor = isDay ? "#FFD700" : "#B0E0E6";
+  const iconColor = isDay ? "#fdd835" : "#b0e0e6";
 
   return (
     <motion.div
@@ -68,9 +68,8 @@ export default function WorldClock() {
         sx={{
           background: gradient,
           borderRadius: 4,
-          boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
           p: 3,
-          backdropFilter: "blur(10px)",
           maxWidth: 420,
           mx: "auto",
           transition: "background 1s ease",
@@ -78,10 +77,10 @@ export default function WorldClock() {
       >
         <Card
           sx={{
-            background: "rgba(255,255,255,0.15)",
-            backdropFilter: "blur(12px)",
+            background: "rgba(255,255,255,0.1)",
+            backdropFilter: "blur(8px)",
             borderRadius: 4,
-            color: "white",
+            color: "#fff",
             boxShadow: "0 4px 25px rgba(0,0,0,0.3)",
           }}
         >
@@ -133,7 +132,7 @@ export default function WorldClock() {
               }}
             />
 
-            {/* 🔽 Selector de ciudades mejorado */}
+            {/* Selector de ciudades mejorado */}
             <FormControl
               fullWidth
               variant="outlined"
@@ -143,21 +142,20 @@ export default function WorldClock() {
                   color: "#fff",
                   fontWeight: "bold",
                   fontSize: "1rem",
-                  letterSpacing: "0.5px",
                 },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "12px",
-                  background: "rgba(255,255,255,0.12)",
+                  borderRadius: "10px",
+                  background: "rgba(255,255,255,0.15)",
                   backdropFilter: "blur(8px)",
                   "& fieldset": {
-                    borderColor: "rgba(255,255,255,0.4)",
+                    borderColor: "rgba(255,255,255,0.5)",
                   },
                   "&:hover fieldset": {
                     borderColor: "#fff",
                   },
                   "&.Mui-focused fieldset": {
                     borderColor: "#fff",
-                    boxShadow: "0 0 8px rgba(255,255,255,0.4)",
+                    boxShadow: "0 0 8px rgba(255,255,255,0.3)",
                   },
                 },
                 "& .MuiSelect-icon": {
@@ -179,6 +177,16 @@ export default function WorldClock() {
                     cities.find((city) => city.name === e.target.value)
                   )
                 }
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      background: "rgba(40,40,40,0.9)",
+                      color: "#fff",
+                      borderRadius: "10px",
+                      mt: 1,
+                    },
+                  },
+                }}
               >
                 {cities.map((city) => (
                   <MenuItem key={city.name} value={city.name}>
@@ -192,4 +200,4 @@ export default function WorldClock() {
       </Box>
     </motion.div>
   );
-}
+    }
