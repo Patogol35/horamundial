@@ -51,12 +51,11 @@ export default function WorldClock() {
     return () => clearInterval(interval);
   }, [selectedCity]);
 
-  // Fondo con más contraste y texto oscuro cuando es de día
   const gradient = isDay
-    ? "linear-gradient(135deg, #a1c4fd, #c2e9fb)" // más contrastado y legible
+    ? "linear-gradient(135deg, #f2f6fc, #d9e4f5)"
     : "linear-gradient(135deg, #232526, #414345)";
 
-  const textColor = isDay ? "#0b2545" : "#fff"; // texto oscuro de día
+  const textColor = isDay ? "#0b2545" : "#fff";
 
   return (
     <motion.div
@@ -80,8 +79,8 @@ export default function WorldClock() {
         <Card
           sx={{
             background: isDay
-              ? "rgba(255,255,255,0.4)"
-              : "rgba(255,255,255,0.15)",
+              ? "rgba(255,255,255,0.7)"
+              : "rgba(255,255,255,0.1)",
             backdropFilter: "blur(12px)",
             borderRadius: 4,
             color: textColor,
@@ -89,7 +88,6 @@ export default function WorldClock() {
           }}
         >
           <CardContent>
-            {/* Ícono día/noche */}
             <motion.div
               initial={{ rotate: 0 }}
               animate={{ rotate: isDay ? 0 : 180 }}
@@ -102,7 +100,6 @@ export default function WorldClock() {
               )}
             </motion.div>
 
-            {/* Ciudad */}
             <Typography
               variant="h4"
               sx={{
@@ -116,7 +113,6 @@ export default function WorldClock() {
               {selectedCity.name}
             </Typography>
 
-            {/* Hora */}
             <Typography
               variant="h5"
               sx={{
@@ -130,12 +126,11 @@ export default function WorldClock() {
               <AccessTime sx={{ mr: 1, color: textColor }} /> {time}
             </Typography>
 
-            {/* Día/Noche */}
             <Chip
               label={isDay ? "☀️ Día" : "🌙 Noche"}
               sx={{
                 bgcolor: isDay
-                  ? "rgba(255,255,255,0.3)"
+                  ? "rgba(255,255,255,0.5)"
                   : "rgba(0,0,0,0.3)",
                 color: textColor,
                 mb: 2,
@@ -143,7 +138,6 @@ export default function WorldClock() {
               }}
             />
 
-            {/* Selector corregido y legible */}
             <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
               <InputLabel
                 sx={{
@@ -164,7 +158,7 @@ export default function WorldClock() {
                 sx={{
                   color: textColor,
                   bgcolor: isDay
-                    ? "rgba(255,255,255,0.8)"
+                    ? "rgba(255,255,255,0.9)"
                     : "rgba(255,255,255,0.1)",
                   borderRadius: 2,
                   ".MuiOutlinedInput-notchedOutline": {
