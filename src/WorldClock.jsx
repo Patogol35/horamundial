@@ -28,7 +28,7 @@ const cities = [
   { name: "Roma", timezone: "Europe/Rome" },
 ];
 
-export default function WorldClock() {
+export default function WorldClock({ isGlobalDay }) {
   const [selectedCity, setSelectedCity] = useState(cities[0]);
   const [time, setTime] = useState("");
   const [isDay, setIsDay] = useState(true);
@@ -58,9 +58,10 @@ export default function WorldClock() {
   }, [selectedCity]);
 
   const gradient = isDay
-    ? "linear-gradient(135deg, #f2f6fc, #d9e4f5)"
+    ? "linear-gradient(135deg, #e3f2fd, #bbdefb)"
     : "linear-gradient(135deg, #232526, #414345)";
   const textColor = isDay ? "#0b2545" : "#fff";
+  const iconColor = isDay ? "#fbc02d" : "#fff";
 
   return (
     <motion.div
@@ -84,7 +85,7 @@ export default function WorldClock() {
         <Card
           sx={{
             background: isDay
-              ? "rgba(255,255,255,0.7)"
+              ? "rgba(255,255,255,0.8)"
               : "rgba(255,255,255,0.1)",
             backdropFilter: "blur(12px)",
             borderRadius: 4,
@@ -99,9 +100,9 @@ export default function WorldClock() {
               transition={{ duration: 1 }}
             >
               {isDay ? (
-                <WbSunny sx={{ fontSize: 60, color: "#fff" }} />
+                <WbSunny sx={{ fontSize: 60, color: iconColor }} />
               ) : (
-                <NightsStay sx={{ fontSize: 60, color: "#fff" }} />
+                <NightsStay sx={{ fontSize: 60, color: iconColor }} />
               )}
             </motion.div>
 
@@ -187,4 +188,4 @@ export default function WorldClock() {
       </Box>
     </motion.div>
   );
-                  }                  
+}
