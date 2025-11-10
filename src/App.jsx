@@ -6,7 +6,6 @@ import WorldClock from "./WorldClock";
 export default function App() {
   const [isDay, setIsDay] = useState(true);
 
-  // Detecta si es día o noche según la hora local
   useEffect(() => {
     const checkDay = () => {
       const hour = new Date().getHours();
@@ -17,9 +16,6 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Fondo blanco limpio
-  const background = "#ffffff";
-
   return (
     <>
       <CssBaseline />
@@ -28,21 +24,19 @@ export default function App() {
           minHeight: "100vh",
           width: "100%",
           overflowX: "hidden",
-          background,
+          background: "#ffffff",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
-          transition: "all 1s ease-in-out",
           p: 3,
         }}
       >
         <Container maxWidth="sm">
-          {/* Título con icono del mundo y autor */}
           <Stack direction="column" alignItems="center" spacing={1}>
             <Typography
-              variant="h3"
+              variant="h4"
               component="h1"
               gutterBottom
               sx={{
@@ -53,11 +47,10 @@ export default function App() {
                 mb: 1,
               }}
             >
-              <Public sx={{ fontSize: 40, mr: 1, verticalAlign: "middle" }} />{" "}
+              <Public sx={{ fontSize: 36, mr: 1, verticalAlign: "middle" }} />{" "}
               Reloj Mundial Interactivo
             </Typography>
 
-            {/* Autor */}
             <Typography
               variant="subtitle1"
               sx={{
@@ -71,7 +64,6 @@ export default function App() {
             </Typography>
           </Stack>
 
-          {/* Botón modo día/noche */}
           <IconButton
             onClick={() => setIsDay((prev) => !prev)}
             sx={{
@@ -82,7 +74,11 @@ export default function App() {
               "&:hover": { bgcolor: "rgba(0,0,0,0.8)" },
             }}
           >
-            {isDay ? <WbSunny sx={{ fontSize: 40, color: "#fff" }} /> : <NightsStay sx={{ fontSize: 40, color: "#fff" }} />}
+            {isDay ? (
+              <WbSunny sx={{ fontSize: 36, color: "#fff" }} />
+            ) : (
+              <NightsStay sx={{ fontSize: 36, color: "#fff" }} />
+            )}
           </IconButton>
 
           <WorldClock />
