@@ -22,7 +22,7 @@ const cities = [
   { name: "Madrid", timezone: "Europe/Madrid" },
 ];
 
-export default function WorldClock() {
+export default function WorldClock({ forcedTheme }) {
   const [selectedCity, setSelectedCity] = useState(cities[0]);
   const [time, setTime] = useState("");
   const [isDay, setIsDay] = useState(true);
@@ -43,6 +43,7 @@ export default function WorldClock() {
       const hourInCity = new Date(
         now.toLocaleString("en-US", { timeZone: selectedCity.timezone })
       ).getHours();
+
       setIsDay(hourInCity >= 6 && hourInCity < 18);
     };
 
@@ -51,11 +52,13 @@ export default function WorldClock() {
     return () => clearInterval(interval);
   }, [selectedCity]);
 
-  const gradient = isDay
+  // Permite forzar el modo global desde App
+  const themeMode = forcedTheme === "day" ? true : forcedTheme === "night" ? false : isDay;
+
+  const gradient = themeMode
     ? "linear-gradient(135deg, #a1c4fd, #c2e9fb)"
     : "linear-gradient(135deg, #232526, #414345)";
-
-  const iconColor = isDay ? "#FFD700" : "#B0E0E6";
+  const iconColor = themeMode ? "#FFD700" : "#B0E0E6";
 
   return (
     <motion.div
@@ -88,10 +91,10 @@ export default function WorldClock() {
           <CardContent>
             <motion.div
               initial={{ rotate: 0 }}
-              animate={{ rotate: isDay ? 0 : 180 }}
+              animate={{ rotate: themeMode ? 0 : 180 }}
               transition={{ duration: 1 }}
             >
-              {isDay ? (
+              {themeMode ? (
                 <WbSunny sx={{ fontSize: 60, color: iconColor }} />
               ) : (
                 <NightsStay sx={{ fontSize: 60, color: iconColor }} />
@@ -124,9 +127,11 @@ export default function WorldClock() {
             </Typography>
 
             <Chip
-              label={isDay ? "☀️ Día" : "🌙 Noche"}
+              label={themeMode ? "☀️ Día" : "🌙 Noche"}
               sx={{
-                bgcolor: isDay ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.3)",
+                bgcolor: themeMode
+                  ? "rgba(255,255,255,0.2)"
+                  : "rgba(0,0,0,0.3)",
                 color: "#fff",
                 mb: 2,
                 fontWeight: "bold",
@@ -168,4 +173,4 @@ export default function WorldClock() {
       </Box>
     </motion.div>
   );
-                  }
+}
