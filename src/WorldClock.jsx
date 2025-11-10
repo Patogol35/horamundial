@@ -11,7 +11,7 @@ import {
   Chip,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { AccessTime, WbSunny, NightsStay, Public } from "@mui/icons-material";
+import { AccessTime, WbSunny, NightsStay } from "@mui/icons-material";
 
 const cities = [
   { name: "Quito", timezone: "America/Guayaquil" },
@@ -54,7 +54,6 @@ export default function WorldClock({ isDay }) {
   const gradient = isDayInCity
     ? "linear-gradient(135deg, #5b86e5, #36d1dc)"
     : "linear-gradient(135deg, #232526, #414345)";
-
   const iconColor = isDayInCity ? "#FFD700" : "#B0E0E6";
 
   return (
@@ -136,17 +135,19 @@ export default function WorldClock({ isDay }) {
               }}
             />
 
+            {/* ✅ Selector corregido */}
             <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
               <InputLabel
                 sx={{
                   color: "#fff",
-                  "&.Mui-focused": { color: "#fff" }, // ✅ visible al enfocar
+                  "&.Mui-focused": { color: "#fff" },
                   backgroundColor: "rgba(0,0,0,0.2)",
                   px: 1,
                   borderRadius: 1,
+                  fontWeight: "bold",
                 }}
               >
-                <Public sx={{ mr: 1, verticalAlign: "middle" }} /> Ciudad
+                Ciudad
               </InputLabel>
               <Select
                 value={selectedCity.name}
