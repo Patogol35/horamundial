@@ -135,16 +135,17 @@ export default function WorldClock({ isDay }) {
               }}
             />
 
-            {/* ✅ Selector corregido */}
+            {/* ✅ Label “Ciudad” arreglado */}
             <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
               <InputLabel
+                shrink // 🔥 mantiene el label visible arriba
                 sx={{
                   color: "#fff",
-                  "&.Mui-focused": { color: "#fff" },
-                  backgroundColor: "rgba(0,0,0,0.2)",
-                  px: 1,
-                  borderRadius: 1,
                   fontWeight: "bold",
+                  backgroundColor: "rgba(0,0,0,0.3)",
+                  px: 0.8,
+                  borderRadius: 1,
+                  transform: "translate(14px, -6px) scale(0.85)",
                 }}
               >
                 Ciudad
@@ -181,4 +182,4 @@ export default function WorldClock({ isDay }) {
       </Box>
     </motion.div>
   );
-}
+                }
