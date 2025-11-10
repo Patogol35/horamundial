@@ -67,7 +67,7 @@ export default function App() {
                 gap: 1,
               }}
             >
-              🌎 Reloj Mundial Interactivo
+            Reloj Mundial Interactivo
             </Typography>
 
             <Typography
