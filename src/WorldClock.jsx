@@ -22,10 +22,10 @@ const cities = [
   { name: "Madrid", timezone: "Europe/Madrid" },
   { name: "París", timezone: "Europe/Paris" },
   { name: "Los Ángeles", timezone: "America/Los_Angeles" },
-  { name: "Ciudad de México", timezone: "America/Mexico_City" },
-  { name: "Buenos Aires", timezone: "America/Argentina/Buenos_Aires" },
   { name: "Toronto", timezone: "America/Toronto" },
+  { name: "Buenos Aires", timezone: "America/Argentina/Buenos_Aires" },
   { name: "Roma", timezone: "Europe/Rome" },
+  { name: "Dubái", timezone: "Asia/Dubai" },
 ];
 
 export default function WorldClock({ isGlobalDay }) {
@@ -58,10 +58,9 @@ export default function WorldClock({ isGlobalDay }) {
   }, [selectedCity]);
 
   const gradient = isDay
-    ? "linear-gradient(135deg, #e3f2fd, #bbdefb)"
+    ? "linear-gradient(135deg, #a1c4fd, #c2e9fb)"
     : "linear-gradient(135deg, #232526, #414345)";
-  const textColor = isDay ? "#0b2545" : "#fff";
-  const iconColor = isDay ? "#fff" : "#fff"; // sol y luna blancos
+  const iconColor = "#ffffff";
 
   return (
     <motion.div
@@ -84,12 +83,10 @@ export default function WorldClock({ isGlobalDay }) {
       >
         <Card
           sx={{
-            background: isDay
-              ? "rgba(255,255,255,0.8)"
-              : "rgba(255,255,255,0.1)",
+            background: "rgba(255,255,255,0.2)",
             backdropFilter: "blur(12px)",
             borderRadius: 4,
-            color: textColor,
+            color: "#fff",
             boxShadow: "0 4px 25px rgba(0,0,0,0.3)",
           }}
         >
@@ -113,7 +110,7 @@ export default function WorldClock({ isGlobalDay }) {
                 mb: 1,
                 fontWeight: "bold",
                 letterSpacing: 0.5,
-                color: textColor,
+                color: "#fff",
               }}
             >
               {selectedCity.name}
@@ -126,30 +123,28 @@ export default function WorldClock({ isGlobalDay }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: textColor,
               }}
             >
-              <AccessTime sx={{ mr: 1, color: textColor }} /> {time}
+              <AccessTime sx={{ mr: 1 }} /> {time}
             </Typography>
 
             <Chip
               label={isDay ? "☀️ Día" : "🌙 Noche"}
               sx={{
-                bgcolor: isDay
-                  ? "rgba(255,255,255,0.5)"
-                  : "rgba(0,0,0,0.3)",
-                color: textColor,
+                bgcolor: isDay ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.3)",
+                color: "#fff",
                 mb: 2,
                 fontWeight: "bold",
               }}
             />
 
+            {/* Selector con líneas negras y texto visible */}
             <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
               <InputLabel
                 sx={{
-                  color: textColor,
-                  "&.Mui-focused": { color: textColor },
+                  color: "#000",
                   fontWeight: "bold",
+                  "&.Mui-focused": { color: "#000" },
                 }}
               >
                 Ciudad
@@ -163,48 +158,19 @@ export default function WorldClock({ isGlobalDay }) {
                   )
                 }
                 sx={{
-                  color: textColor,
-                  bgcolor: isDay
-                    ? "rgba(255,255,255,0.95)"
-                    : "rgba(255,255,255,0.1)",
-                  borderRadius: 2,
-                  fontWeight: "bold",
+                  color: "#000",
+                  bgcolor: "#fff",
                   ".MuiOutlinedInput-notchedOutline": {
-                    borderColor: "black",
+                    borderColor: "#000",
                   },
                   "&:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "black",
+                    borderColor: "#333",
                   },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "black",
-                  },
-                  ".MuiSvgIcon-root": { color: textColor },
-                }}
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      bgcolor: isDay ? "#fff" : "#333",
-                      color: isDay ? "#000" : "#fff",
-                      borderRadius: 2,
-                      boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
-                    },
-                  },
+                  ".MuiSvgIcon-root": { color: "#000" },
                 }}
               >
                 {cities.map((city) => (
-                  <MenuItem
-                    key={city.name}
-                    value={city.name}
-                    sx={{
-                      color: isDay ? "#000" : "#fff",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        bgcolor: isDay
-                          ? "rgba(0,0,0,0.1)"
-                          : "rgba(255,255,255,0.2)",
-                      },
-                    }}
-                  >
+                  <MenuItem key={city.name} value={city.name}>
                     {city.name}
                   </MenuItem>
                 ))}
