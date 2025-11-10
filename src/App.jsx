@@ -46,7 +46,7 @@ export default function App() {
           boxSizing: "border-box",
         }}
       >
-        {/* Botón sol/luna */}
+        {/* 🌞 / 🌙 botón unificado */}
         <Tooltip title={isDay ? "Cambiar a modo noche" : "Cambiar a modo día"}>
           <IconButton
             onClick={toggleTheme}
@@ -54,15 +54,11 @@ export default function App() {
               position: "absolute",
               top: 16,
               right: 16,
-              color: isDay ? "#FFD700" : "#fff",
-              backgroundColor: isDay
-                ? "rgba(255,255,255,0.4)"
-                : "rgba(255,255,255,0.1)",
-              backdropFilter: "blur(6px)",
+              color: "#fff", // 🔥 mismo color para sol y luna
+              backgroundColor: "rgba(255,255,255,0.15)",
+              backdropFilter: "blur(8px)",
               "&:hover": {
-                backgroundColor: isDay
-                  ? "rgba(255,255,255,0.6)"
-                  : "rgba(255,255,255,0.25)",
+                backgroundColor: "rgba(255,255,255,0.3)",
               },
               transition: "all 0.4s ease",
             }}
@@ -104,4 +100,4 @@ export default function App() {
       </Box>
     </>
   );
-}
+                   }
