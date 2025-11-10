@@ -52,25 +52,28 @@ export default function WorldClock() {
   }, [selectedCity]);
 
   const gradient = isDay
-    ? "linear-gradient(135deg, #6dd5fa, #ffffff)"
-    : "linear-gradient(135deg, #0f2027, #203a43, #2c5364)";
+    ? "linear-gradient(135deg, #a1c4fd, #c2e9fb)"
+    : "linear-gradient(135deg, #232526, #414345)";
+
+  const iconColor = isDay ? "#FFD700" : "#B0E0E6";
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.7 }}
       style={{ width: "100%" }}
     >
       <Box
         sx={{
           background: gradient,
           borderRadius: 4,
-          boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
           p: 3,
-          backdropFilter: "blur(8px)",
+          backdropFilter: "blur(10px)",
           maxWidth: 420,
           mx: "auto",
+          transition: "background 1s ease",
         }}
       >
         <Card
@@ -79,7 +82,7 @@ export default function WorldClock() {
             backdropFilter: "blur(12px)",
             borderRadius: 4,
             color: "white",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+            boxShadow: "0 4px 25px rgba(0,0,0,0.3)",
           }}
         >
           <CardContent>
@@ -89,9 +92,9 @@ export default function WorldClock() {
               transition={{ duration: 1 }}
             >
               {isDay ? (
-                <WbSunny sx={{ fontSize: 60, color: "#FFD700" }} />
+                <WbSunny sx={{ fontSize: 60, color: iconColor }} />
               ) : (
-                <NightsStay sx={{ fontSize: 60, color: "#B0E0E6" }} />
+                <NightsStay sx={{ fontSize: 60, color: iconColor }} />
               )}
             </motion.div>
 
@@ -102,6 +105,7 @@ export default function WorldClock() {
                 mb: 1,
                 fontWeight: "bold",
                 letterSpacing: 0.5,
+                color: "#fff",
               }}
             >
               {selectedCity.name}
@@ -164,4 +168,4 @@ export default function WorldClock() {
       </Box>
     </motion.div>
   );
-}
+                  }
