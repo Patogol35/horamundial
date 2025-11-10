@@ -61,7 +61,7 @@ export default function WorldClock({ isGlobalDay }) {
     ? "linear-gradient(135deg, #e3f2fd, #bbdefb)"
     : "linear-gradient(135deg, #232526, #414345)";
   const textColor = isDay ? "#0b2545" : "#fff";
-  const iconColor = isDay ? "#fbc02d" : "#fff";
+  const iconColor = isDay ? "#fff" : "#fff"; // sol y luna blancos
 
   return (
     <motion.div
@@ -149,6 +149,7 @@ export default function WorldClock({ isGlobalDay }) {
                 sx={{
                   color: textColor,
                   "&.Mui-focused": { color: textColor },
+                  fontWeight: "bold",
                 }}
               >
                 Ciudad
@@ -164,11 +165,12 @@ export default function WorldClock({ isGlobalDay }) {
                 sx={{
                   color: textColor,
                   bgcolor: isDay
-                    ? "rgba(255,255,255,0.9)"
+                    ? "rgba(255,255,255,0.95)"
                     : "rgba(255,255,255,0.1)",
                   borderRadius: 2,
+                  fontWeight: "bold",
                   ".MuiOutlinedInput-notchedOutline": {
-                    borderColor: "black", // ✅ líneas del selector siempre negras
+                    borderColor: "black",
                   },
                   "&:hover .MuiOutlinedInput-notchedOutline": {
                     borderColor: "black",
@@ -178,9 +180,31 @@ export default function WorldClock({ isGlobalDay }) {
                   },
                   ".MuiSvgIcon-root": { color: textColor },
                 }}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      bgcolor: isDay ? "#fff" : "#333",
+                      color: isDay ? "#000" : "#fff",
+                      borderRadius: 2,
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
+                    },
+                  },
+                }}
               >
                 {cities.map((city) => (
-                  <MenuItem key={city.name} value={city.name}>
+                  <MenuItem
+                    key={city.name}
+                    value={city.name}
+                    sx={{
+                      color: isDay ? "#000" : "#fff",
+                      fontWeight: "bold",
+                      "&:hover": {
+                        bgcolor: isDay
+                          ? "rgba(0,0,0,0.1)"
+                          : "rgba(255,255,255,0.2)",
+                      },
+                    }}
+                  >
                     {city.name}
                   </MenuItem>
                 ))}
