@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+  import React, { useEffect, useState } from "react";
 import { CssBaseline, Container, Typography, Box, IconButton } from "@mui/material";
 import WorldClock from "./WorldClock";
 import { WbSunny, NightsStay } from "@mui/icons-material";
@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 export default function App() {
   const [isDay, setIsDay] = useState(true);
 
+  // Detectar si es día o noche según la hora local
   useEffect(() => {
     const checkDay = () => {
       const hour = new Date().getHours();
@@ -17,9 +18,10 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Fondo blanco en general
   const backgroundColor = isDay ? "#ffffff" : "#0f2027";
   const textColor = isDay ? "#0D47A1" : "#ffffff";
-  const iconColor = "#ffffff";
+  const iconColor = "#ffffff"; // Sol y luna siempre blancos
 
   return (
     <>
@@ -80,7 +82,7 @@ export default function App() {
             <IconButton
               onClick={() => setIsDay(!isDay)}
               sx={{
-                mb: 3,
+                mb: 2,
                 bgcolor: isDay ? "#1976d2" : "#333",
                 color: iconColor,
                 borderRadius: "50%",
