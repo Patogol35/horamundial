@@ -1,4 +1,4 @@
-  import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CssBaseline, Container, Typography, Box, IconButton } from "@mui/material";
 import WorldClock from "./WorldClock";
 import { WbSunny, NightsStay } from "@mui/icons-material";
@@ -18,7 +18,6 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Fondo blanco en general
   const backgroundColor = isDay ? "#ffffff" : "#0f2027";
   const textColor = isDay ? "#0D47A1" : "#ffffff";
   const iconColor = "#ffffff"; // Sol y luna siempre blancos
@@ -29,6 +28,8 @@ export default function App() {
       <Box
         sx={{
           minHeight: "100vh",
+          width: "100vw", // ← fuerza el ancho exacto de la ventana
+          overflowX: "hidden", // ← evita scroll horizontal
           background: backgroundColor,
           display: "flex",
           flexDirection: "column",
@@ -37,10 +38,15 @@ export default function App() {
           textAlign: "center",
           transition: "all 1s ease-in-out",
           p: 3,
-          overflowX: "hidden",
+          boxSizing: "border-box",
         }}
       >
-        <Container maxWidth="sm">
+        <Container
+          maxWidth="sm"
+          sx={{
+            px: 0, // ← elimina posibles márgenes extra del Container
+          }}
+        >
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
