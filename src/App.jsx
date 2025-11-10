@@ -5,9 +5,8 @@ import { WbSunny, NightsStay } from "@mui/icons-material";
 import { motion } from "framer-motion";
 
 export default function App() {
-  const [isDay, setIsDay] = useState(false); // 🌙 por defecto inicia en oscuro
+  const [isDay, setIsDay] = useState(false); // 🌙 inicia oscuro por defecto
 
-  // Detectar si es día o noche según la hora local
   useEffect(() => {
     const checkDay = () => {
       const hour = new Date().getHours();
@@ -27,7 +26,10 @@ export default function App() {
       <CssBaseline />
       <Box
         sx={{
+          width: "100vw", // ocupa todo el ancho
           minHeight: "100vh",
+          overflowX: "hidden", // evita scroll o espacio lateral
+          overflowY: "auto",
           background: backgroundColor,
           display: "flex",
           flexDirection: "column",
@@ -35,11 +37,12 @@ export default function App() {
           justifyContent: "center",
           textAlign: "center",
           transition: "all 1s ease-in-out",
-          p: 3,
-          overflowX: "hidden",
+          p: { xs: 2, md: 3 },
+          boxSizing: "border-box", // evita acumulación de padding
+          m: 0,
         }}
       >
-        <Container maxWidth="sm">
+        <Container maxWidth="sm" sx={{ px: { xs: 2, md: 0 } }}>
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -78,7 +81,6 @@ export default function App() {
               Creado por <strong>Jorge Patricio Santamaría Cherrez</strong>
             </Typography>
 
-            {/* Botón de alternancia día/noche */}
             <IconButton
               onClick={() => setIsDay(!isDay)}
               sx={{
