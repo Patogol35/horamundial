@@ -168,10 +168,13 @@ export default function WorldClock({ isGlobalDay }) {
                     : "rgba(255,255,255,0.1)",
                   borderRadius: 2,
                   ".MuiOutlinedInput-notchedOutline": {
-                    borderColor: "rgba(255,255,255,0.4)",
+                    borderColor: "black", // ✅ líneas del selector siempre negras
                   },
                   "&:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "rgba(255,255,255,0.7)",
+                    borderColor: "black",
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "black",
                   },
                   ".MuiSvgIcon-root": { color: textColor },
                 }}
