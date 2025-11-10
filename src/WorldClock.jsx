@@ -52,7 +52,7 @@ export default function WorldClock() {
   }, [selectedCity]);
 
   const gradient = isDay
-    ? "linear-gradient(135deg, #a1c4fd, #c2e9fb)"
+    ? "linear-gradient(135deg, #5b86e5, #36d1dc)" // colores diurnos más legibles
     : "linear-gradient(135deg, #232526, #414345)";
 
   const iconColor = isDay ? "#FFD700" : "#B0E0E6";
@@ -61,7 +61,7 @@ export default function WorldClock() {
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7 }}
+      transition={{ duration: 0.8 }}
       style={{ width: "100%" }}
     >
       <Box
@@ -69,8 +69,7 @@ export default function WorldClock() {
           background: gradient,
           borderRadius: 4,
           boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
-          p: 3,
-          backdropFilter: "blur(10px)",
+          p: { xs: 2, sm: 3 },
           maxWidth: 420,
           mx: "auto",
           transition: "background 1s ease",
@@ -78,14 +77,14 @@ export default function WorldClock() {
       >
         <Card
           sx={{
-            background: "rgba(255,255,255,0.15)",
-            backdropFilter: "blur(12px)",
+            background: "rgba(255,255,255,0.12)",
+            backdropFilter: "blur(15px)",
             borderRadius: 4,
-            color: "white",
-            boxShadow: "0 4px 25px rgba(0,0,0,0.3)",
+            color: "#fff",
+            boxShadow: "0 4px 25px rgba(0,0,0,0.4)",
           }}
         >
-          <CardContent>
+          <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
             <motion.div
               initial={{ rotate: 0 }}
               animate={{ rotate: isDay ? 0 : 180 }}
@@ -106,6 +105,7 @@ export default function WorldClock() {
                 fontWeight: "bold",
                 letterSpacing: 0.5,
                 color: "#fff",
+                fontSize: { xs: "1.8rem", sm: "2rem" },
               }}
             >
               {selectedCity.name}
@@ -118,6 +118,7 @@ export default function WorldClock() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                fontSize: { xs: "1.3rem", sm: "1.6rem" },
               }}
             >
               <AccessTime sx={{ mr: 1 }} /> {time}
@@ -126,7 +127,7 @@ export default function WorldClock() {
             <Chip
               label={isDay ? "☀️ Día" : "🌙 Noche"}
               sx={{
-                bgcolor: isDay ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.3)",
+                bgcolor: isDay ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.4)",
                 color: "#fff",
                 mb: 2,
                 fontWeight: "bold",
@@ -154,6 +155,7 @@ export default function WorldClock() {
                     borderColor: "#fff",
                   },
                   ".MuiSvgIcon-root": { color: "#fff" },
+                  fontSize: { xs: "1rem", sm: "1.1rem" },
                 }}
               >
                 {cities.map((city) => (
@@ -168,4 +170,4 @@ export default function WorldClock() {
       </Box>
     </motion.div>
   );
-}
+                    }
