@@ -11,7 +11,7 @@ import {
   Chip,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { AccessTime, Public } from "@mui/icons-material";
+import { AccessTime, WbSunny, NightsStay, Public } from "@mui/icons-material";
 
 const cities = [
   { name: "Quito", timezone: "America/Guayaquil" },
@@ -22,9 +22,10 @@ const cities = [
   { name: "Madrid", timezone: "Europe/Madrid" },
 ];
 
-export default function WorldClock({ isDay }) {
+export default function WorldClock() {
   const [selectedCity, setSelectedCity] = useState(cities[0]);
   const [time, setTime] = useState("");
+  const [isDay, setIsDay] = useState(true);
 
   useEffect(() => {
     const updateClock = () => {
@@ -36,8 +37,15 @@ export default function WorldClock({ isDay }) {
         second: "2-digit",
         hour12: true,
       };
-      setTime(new Intl.DateTimeFormat([], options).format(now));
+      const formatter = new Intl.DateTimeFormat([], options);
+      setTime(formatter.format(now));
+
+      const hourInCity = new Date(
+        now.toLocaleString("en-US", { timeZone: selectedCity.timezone })
+      ).getHours();
+      setIsDay(hourInCity >= 6 && hourInCity < 18);
     };
+
     updateClock();
     const interval = setInterval(updateClock, 1000);
     return () => clearInterval(interval);
@@ -46,6 +54,8 @@ export default function WorldClock({ isDay }) {
   const gradient = isDay
     ? "linear-gradient(135deg, #a1c4fd, #c2e9fb)"
     : "linear-gradient(135deg, #232526, #414345)";
+
+  const iconColor = isDay ? "#FFD700" : "#B0E0E6";
 
   return (
     <motion.div
@@ -76,10 +86,22 @@ export default function WorldClock({ isDay }) {
           }}
         >
           <CardContent>
+            <motion.div
+              initial={{ rotate: 0 }}
+              animate={{ rotate: isDay ? 0 : 180 }}
+              transition={{ duration: 1 }}
+            >
+              {isDay ? (
+                <WbSunny sx={{ fontSize: 60, color: iconColor }} />
+              ) : (
+                <NightsStay sx={{ fontSize: 60, color: iconColor }} />
+              )}
+            </motion.div>
+
             <Typography
               variant="h4"
               sx={{
-                mt: 1,
+                mt: 2,
                 mb: 1,
                 fontWeight: "bold",
                 letterSpacing: 0.5,
