@@ -8,24 +8,21 @@ import {
   FormControl,
   InputLabel,
   Box,
+  Chip,
 } from "@mui/material";
-import {
-  AccessTime,
-  WbSunny,
-  NightsStay,
-  Public,
-} from "@mui/icons-material";
+import { motion } from "framer-motion";
+import { AccessTime, WbSunny, NightsStay, Public } from "@mui/icons-material";
 
 const cities = [
-  { name: "Nueva York", timezone: "America/New_York" },
+  { name: "Quito", timezone: "America/Guayaquil" },
   { name: "Londres", timezone: "Europe/London" },
+  { name: "Nueva York", timezone: "America/New_York" },
   { name: "Tokio", timezone: "Asia/Tokyo" },
   { name: "Sídney", timezone: "Australia/Sydney" },
-  { name: "Quito", timezone: "America/Guayaquil" },
   { name: "Madrid", timezone: "Europe/Madrid" },
 ];
 
-const WorldClock = () => {
+export default function WorldClock() {
   const [selectedCity, setSelectedCity] = useState(cities[0]);
   const [time, setTime] = useState("");
   const [isDay, setIsDay] = useState(true);
@@ -46,7 +43,6 @@ const WorldClock = () => {
       const hourInCity = new Date(
         now.toLocaleString("en-US", { timeZone: selectedCity.timezone })
       ).getHours();
-
       setIsDay(hourInCity >= 6 && hourInCity < 18);
     };
 
@@ -55,78 +51,117 @@ const WorldClock = () => {
     return () => clearInterval(interval);
   }, [selectedCity]);
 
+  const gradient = isDay
+    ? "linear-gradient(135deg, #6dd5fa, #ffffff)"
+    : "linear-gradient(135deg, #0f2027, #203a43, #2c5364)";
+
   return (
-    <Box
-      sx={{
-        width: "100%",
-        maxWidth: 400,
-        textAlign: "center",
-        background: isDay
-          ? "linear-gradient(135deg, #87CEEB 0%, #FFD700 100%)"
-          : "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)",
-        borderRadius: 4,
-        boxShadow: "0 8px 25px rgba(0,0,0,0.3)",
-        p: 3,
-        transition: "all 0.5s ease",
-      }}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      style={{ width: "100%" }}
     >
-      <Card
+      <Box
         sx={{
-          backgroundColor: "rgba(255, 255, 255, 0.2)",
-          backdropFilter: "blur(8px)",
+          background: gradient,
           borderRadius: 4,
-          color: "#fff",
-          boxShadow: "none",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
+          p: 3,
+          backdropFilter: "blur(8px)",
+          maxWidth: 420,
+          mx: "auto",
         }}
       >
-        <CardContent>
-          {isDay ? (
-            <WbSunny sx={{ fontSize: 50, color: "#FFD700" }} />
-          ) : (
-            <NightsStay sx={{ fontSize: 50, color: "#B0E0E6" }} />
-          )}
-          <Typography variant="h4" sx={{ mt: 2, mb: 1, fontWeight: "bold" }}>
-            {selectedCity.name}
-          </Typography>
-          <Typography variant="h5" sx={{ mb: 2 }}>
-            <AccessTime sx={{ verticalAlign: "middle", mr: 1 }} />
-            {time}
-          </Typography>
+        <Card
+          sx={{
+            background: "rgba(255,255,255,0.15)",
+            backdropFilter: "blur(12px)",
+            borderRadius: 4,
+            color: "white",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+          }}
+        >
+          <CardContent>
+            <motion.div
+              initial={{ rotate: 0 }}
+              animate={{ rotate: isDay ? 0 : 180 }}
+              transition={{ duration: 1 }}
+            >
+              {isDay ? (
+                <WbSunny sx={{ fontSize: 60, color: "#FFD700" }} />
+              ) : (
+                <NightsStay sx={{ fontSize: 60, color: "#B0E0E6" }} />
+              )}
+            </motion.div>
 
-          <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-            <InputLabel sx={{ color: "#fff" }}>
-              <Public sx={{ mr: 1, verticalAlign: "middle" }} />
-              Ciudad
-            </InputLabel>
-            <Select
-              value={selectedCity.name}
-              label="Ciudad"
-              onChange={(e) =>
-                setSelectedCity(
-                  cities.find((city) => city.name === e.target.value)
-                )
-              }
+            <Typography
+              variant="h4"
               sx={{
-                color: "#fff",
-                ".MuiOutlinedInput-notchedOutline": {
-                  borderColor: "rgba(255,255,255,0.7)",
-                },
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#fff",
-                },
+                mt: 2,
+                mb: 1,
+                fontWeight: "bold",
+                letterSpacing: 0.5,
               }}
             >
-              {cities.map((city) => (
-                <MenuItem key={city.name} value={city.name}>
-                  {city.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </CardContent>
-      </Card>
-    </Box>
-  );
-};
+              {selectedCity.name}
+            </Typography>
 
-export default WorldClock;
+            <Typography
+              variant="h5"
+              sx={{
+                mb: 2,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <AccessTime sx={{ mr: 1 }} /> {time}
+            </Typography>
+
+            <Chip
+              label={isDay ? "☀️ Día" : "🌙 Noche"}
+              sx={{
+                bgcolor: isDay ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.3)",
+                color: "#fff",
+                mb: 2,
+                fontWeight: "bold",
+              }}
+            />
+
+            <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+              <InputLabel sx={{ color: "#fff" }}>
+                <Public sx={{ mr: 1, verticalAlign: "middle" }} /> Ciudad
+              </InputLabel>
+              <Select
+                value={selectedCity.name}
+                label="Ciudad"
+                onChange={(e) =>
+                  setSelectedCity(
+                    cities.find((city) => city.name === e.target.value)
+                  )
+                }
+                sx={{
+                  color: "#fff",
+                  ".MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgba(255,255,255,0.6)",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
+                  },
+                  ".MuiSvgIcon-root": { color: "#fff" },
+                }}
+              >
+                {cities.map((city) => (
+                  <MenuItem key={city.name} value={city.name}>
+                    {city.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </CardContent>
+        </Card>
+      </Box>
+    </motion.div>
+  );
+}
