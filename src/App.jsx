@@ -5,7 +5,7 @@ import { WbSunny, NightsStay } from "@mui/icons-material";
 import { motion } from "framer-motion";
 
 export default function App() {
-  const [isDay, setIsDay] = useState(false); // 🌙 inicia oscuro por defecto
+  const [isDay, setIsDay] = useState(false); // 🌙 inicia en modo oscuro por defecto
 
   useEffect(() => {
     const checkDay = () => {
@@ -38,7 +38,7 @@ export default function App() {
           textAlign: "center",
           transition: "all 1s ease-in-out",
           p: { xs: 2, md: 3 },
-          boxSizing: "border-box", // evita acumulación de padding
+          boxSizing: "border-box",
           m: 0,
         }}
       >
@@ -67,7 +67,7 @@ export default function App() {
                 gap: 1,
               }}
             >
-            Reloj Global Interactivo
+              Reloj Global Interactivo
             </Typography>
 
             <Typography
@@ -81,6 +81,7 @@ export default function App() {
               Creado por <strong>Jorge Patricio Santamaría Cherrez</strong>
             </Typography>
 
+            {/* 🔘 Botón de cambio de modo (sol/luna invertidos) */}
             <IconButton
               onClick={() => setIsDay(!isDay)}
               sx={{
@@ -94,7 +95,8 @@ export default function App() {
                 },
               }}
             >
-              {isDay ? <WbSunny /> : <NightsStay />}
+              {/* El ícono ahora muestra la acción siguiente */}
+              {isDay ? <NightsStay /> : <WbSunny />}
             </IconButton>
           </motion.div>
 
