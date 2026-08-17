@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 import { AccessTime, WbSunny, DarkMode } from "@mui/icons-material";
 
 const cities = [
-  { name: "Ambato", timezone: "America/Guayaquil" },
+  { name: "Quito", timezone: "America/Guayaquil" },
   { name: "Londres", timezone: "Europe/London" },
   { name: "Nueva York", timezone: "America/New_York" },
   { name: "Tokio", timezone: "Asia/Tokyo" },
