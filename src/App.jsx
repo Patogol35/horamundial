@@ -18,27 +18,50 @@ export default function App() {
   useEffect(() => {
     const checkDay = () => {
       const hour = new Date().getHours();
+
       setIsDay(hour >= 6 && hour < 18);
     };
 
     checkDay();
 
-    const interval = setInterval(checkDay, 60 * 1000);
+    const interval = setInterval(
+      checkDay,
+      60 * 1000
+    );
 
     return () => clearInterval(interval);
   }, []);
+
+  const handleToggleMode = () => {
+    setIsDay((previous) => !previous);
+  };
 
   return (
     <>
       <CssBaseline />
 
-      <Box className={`app ${isDay ? "day-mode" : "night-mode"}`}>
-        <Container maxWidth="sm" className="app-container">
+      <Box
+        className={`app ${
+          isDay ? "day-mode" : "night-mode"
+        }`}
+      >
+        <Container
+          maxWidth="sm"
+          className="app-container"
+        >
           <motion.div
             className="app-header"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{
+              opacity: 0,
+              y: -20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.8,
+            }}
           >
             <Typography
               variant="h4"
@@ -60,7 +83,7 @@ export default function App() {
 
             <ModeToggle
               isDay={isDay}
-              onToggle={() => setIsDay(!isDay)}
+              onToggle={handleToggleMode}
             />
           </motion.div>
 
