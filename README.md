@@ -83,17 +83,18 @@ http://localhost:5173
 ```
 
 🖥 Uso
-Abre la aplicación.
 
-1. Selecciona una ciudad en el selector.
+1. Abre la aplicación.
+
+2. Selecciona una ciudad en el selector.
    
-2. Visualiza la hora actual de la ciudad seleccionada.
+3. Visualiza la hora actual de la ciudad seleccionada.
 
-3. Observa automáticamente si en esa ciudad es de día o de noche.
+4. Observa automáticamente si en esa ciudad es de día o de noche.
 
-4. Utiliza el botón de modo claro/oscuro para cambiar la apariencia de la aplicación.
+5. Utiliza el botón de modo claro/oscuro para cambiar la apariencia de la aplicación.
 
-5. Selecciona otra ciudad para consultar su hora y estado de día/noche.
+6. Selecciona otra ciudad para consultar su hora y estado de día/noche.
    
 🌍 Zonas horarias
 
@@ -128,4 +129,5 @@ Algunas de las ciudades disponibles son:
 👨‍💻 Autor
 
 Jorge Patricio Santamaría Cherrez
+
 Máster en Ingeniería de Software y Sistemas Informáticos
