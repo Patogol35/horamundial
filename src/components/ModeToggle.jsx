@@ -1,3 +1,4 @@
+import React from "react";
 import { IconButton } from "@mui/material";
 import {
   WbSunny,
@@ -14,8 +15,13 @@ export default function ModeToggle({
       className={`mode-toggle ${
         isDay ? "day" : "night"
       }`}
+      aria-label="Cambiar modo"
     >
-      {isDay ? <NightsStay /> : <WbSunny />}
+      {isDay ? (
+        <NightsStay />
+      ) : (
+        <WbSunny />
+      )}
     </IconButton>
   );
 }
