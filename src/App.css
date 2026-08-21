@@ -16,7 +16,7 @@
   text-align: center;
   overflow-x: hidden;
 
-  transition: background 1s ease-in-out;
+  transition: background 0.2s ease-in-out;
 }
 
 .app.day-mode {
