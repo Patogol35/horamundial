@@ -10,6 +10,8 @@ import { motion } from "framer-motion";
 import WorldClock from "./WorldClock";
 import ModeToggle from "./components/ModeToggle";
 
+import "./App.css";
+
 export default function App() {
   const [isDay, setIsDay] = useState(false);
 
@@ -26,36 +28,14 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const backgroundColor = isDay ? "#ffffff" : "#0f2027";
-  const textColor = isDay ? "#0D47A1" : "#ffffff";
-
   return (
     <>
       <CssBaseline />
 
-      <Box
-        sx={{
-          width: "100vw",
-          minHeight: "100vh",
-          overflowX: "hidden",
-          overflowY: "auto",
-          background: backgroundColor,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          transition: "all 1s ease-in-out",
-          p: { xs: 2, md: 3 },
-          boxSizing: "border-box",
-          m: 0,
-        }}
-      >
-        <Container
-          maxWidth="sm"
-          sx={{ px: { xs: 2, md: 0 } }}
-        >
+      <Box className={`app ${isDay ? "day-mode" : "night-mode"}`}>
+        <Container maxWidth="sm" className="app-container">
           <motion.div
+            className="app-header"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -63,28 +43,14 @@ export default function App() {
             <Typography
               variant="h4"
               component="h1"
-              gutterBottom
-              sx={{
-                fontWeight: 700,
-                color: textColor,
-                textShadow: isDay
-                  ? "0px 0px 6px rgba(0,0,0,0.15)"
-                  : "0px 0px 10px rgba(255,255,255,0.3)",
-                letterSpacing: 1,
-                mb: 2,
-                transition: "color 1s ease",
-              }}
+              className="app-title"
             >
               Reloj Global Interactivo
             </Typography>
 
             <Typography
               variant="subtitle1"
-              sx={{
-                color: isDay ? "#555" : "#ddd",
-                mb: 4,
-                fontWeight: 500,
-              }}
+              className="app-subtitle"
             >
               Creado por{" "}
               <strong>
