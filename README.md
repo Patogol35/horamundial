@@ -1,16 +1,85 @@
-# React + Vite
+Reloj Global Interactivo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Un reloj mundial interactivo, dinámico y moderno desarrollado con React y Material-UI (MUI).
+Está diseñado para consultar la hora actual de diferentes ciudades del mundo de forma sencilla, visual y entretenida.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Ver la aplicación desplegada en Vercel:
 
-## React Compiler
+[Agrega aquí el enlace de Vercel]
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+⚙️ Tecnologías utilizadas
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React (con Vite)
+
+- JavaScript
+
+- MUI (Material UI)
+
+- Framer Motion
+
+---
+
+✨ Funcionalidades
+
+- Hora actual de diferentes ciudades del mundo
+
+- Selector de ciudades
+
+- Detección automática de día y noche según la zona horaria seleccionada
+
+- Modo claro y oscuro
+
+- Actualización de la hora en tiempo real
+
+- Animaciones interactivas
+
+- Diseño moderno y responsivo
+
+- Soporte para diferentes zonas horarias internacionales
+
+---
+
+📦 Instalación y ejecución
+
+1. Clona el repositorio:
+
+```bash
+git clone [URL-DE-TU-REPOSITORIO]
+
+Ingresa a la carpeta del proyecto:
+cd WorldClock
+Instala las dependencias:
+npm install
+Ejecuta el proyecto:
+npm run dev
+Abre en el navegador:
+http://localhost:5173
+🖥 Uso
+Abre la aplicación.
+Selecciona una ciudad en el selector.
+Visualiza la hora actual de la ciudad seleccionada.
+Observa automáticamente si en esa ciudad es de día o de noche.
+Utiliza el botón de modo claro/oscuro para cambiar la apariencia de la aplicación.
+Selecciona otra ciudad para consultar su hora y estado de día/noche.
+🌍 Zonas horarias
+La aplicación utiliza las zonas horarias internacionales proporcionadas por el estándar IANA mediante Intl.DateTimeFormat.
+Algunas de las ciudades disponibles son:
+Quito
+Londres
+Nueva York
+Tokio
+Sídney
+Madrid
+París
+Los Ángeles
+Ciudad de México
+Buenos Aires
+Toronto
+Roma
+👨‍💻 Autor
+Jorge Patricio Santamaría Cherrez
+Máster en Ingeniería de Software y Sistemas Informáticos
