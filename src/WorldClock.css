@@ -16,7 +16,7 @@
 
   backdrop-filter: blur(10px);
 
-  transition: background 1s ease;
+  transition: background 0.2s ease;
 }
 
 .world-clock-wrapper.day {
@@ -44,7 +44,7 @@
     0 4px 25px rgba(0, 0, 0, 0.3) !important;
 
   transition:
-    background 1s ease,
+    background 0.2s ease,
     color 1s ease;
 }
 
