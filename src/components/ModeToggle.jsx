@@ -17,11 +17,13 @@ export default function ModeToggle({
       }`}
       aria-label="Cambiar modo"
     >
-      {isDay ? (
-        <NightsStay />
-      ) : (
-        <WbSunny />
-      )}
+      <span className="mode-toggle-icon">
+        {isDay ? (
+          <NightsStay />
+        ) : (
+          <WbSunny />
+        )}
+      </span>
     </IconButton>
   );
 }
