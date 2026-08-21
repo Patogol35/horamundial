@@ -11,15 +11,12 @@ export default function ModeToggle({ isDay, onToggle }) {
         color: "#ffffff",
         borderRadius: "50%",
         boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-        transition: "all 0.3s ease",
-
         "&:hover": {
           bgcolor: isDay ? "#1565c0" : "#444",
-          transform: "scale(1.08)",
         },
       }}
     >
       {isDay ? <NightsStay /> : <WbSunny />}
     </IconButton>
   );
-          }
+}
