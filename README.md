@@ -50,15 +50,22 @@ https://reloj-jorgepatricio.vercel.app/
 ```bash
 git clone https://github.com/Patogol35/horamundial
 
+```
+
 Ingresa a la carpeta del proyecto:
 
 ```bash
 cd hora mundial
 
+```
+
 Instala las dependencias:
 
 ```bash
+
 npm install
+
+```
 
 Ejecuta el proyecto:
 
@@ -66,9 +73,14 @@ Ejecuta el proyecto:
 
 npm run dev
 
+```
+
 Abre en el navegador:
+
 ```bash
 http://localhost:5173
+
+```
 
 🖥 Uso
 Abre la aplicación.
