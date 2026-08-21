@@ -7,7 +7,7 @@ Está diseñado para consultar la hora actual de diferentes ciudades del mundo d
 
 Ver la aplicación desplegada en Vercel:
 
-[Agrega aquí el enlace de Vercel]
+https://reloj-jorgepatricio.vercel.app/
 
 ---
 
@@ -51,13 +51,24 @@ Ver la aplicación desplegada en Vercel:
 git clone [URL-DE-TU-REPOSITORIO]
 
 Ingresa a la carpeta del proyecto:
+
+```bash
 cd WorldClock
 Instala las dependencias:
+
+```bash
 npm install
+
 Ejecuta el proyecto:
+
+```bash
+
 npm run dev
+
 Abre en el navegador:
+```bash
 http://localhost:5173
+
 🖥 Uso
 Abre la aplicación.
 Selecciona una ciudad en el selector.
