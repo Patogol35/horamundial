@@ -47,13 +47,6 @@ export default function WorldClock() {
     selectedCity.timezone
   );
 
-  const gradient = isDay
-    ? "linear-gradient(135deg, #e3f2fd, #bbdefb)"
-    : "linear-gradient(135deg, #141e30, #243b55)";
-
-  const textColor = isDay ? "#0b2545" : "#ffffff";
-  const iconColor = isDay ? "#FFD700" : "#ffffff";
-
   const handleCityChange = (event) => {
     const city = cities.find(
       (item) => item.name === event.target.value
@@ -64,50 +57,28 @@ export default function WorldClock() {
     }
   };
 
+  const mode = isDay ? "day" : "night";
+
   return (
     <motion.div
+      className="world-clock"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7 }}
-      style={{ width: "100%" }}
     >
-      <Box
-        sx={{
-          background: gradient,
-          borderRadius: 4,
-          boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
-          p: 3,
-          backdropFilter: "blur(10px)",
-          maxWidth: 420,
-          mx: "auto",
-          transition: "background 1s ease",
-        }}
-      >
-        <Card
-          sx={{
-            background: isDay
-              ? "rgba(255,255,255,0.85)"
-              : "rgba(255,255,255,0.1)",
-            backdropFilter: "blur(12px)",
-            borderRadius: 4,
-            color: textColor,
-            boxShadow: "0 4px 25px rgba(0,0,0,0.3)",
-          }}
-        >
-          <CardContent sx={{ textAlign: "center" }}>
+      <Box className={`world-clock-wrapper ${mode}`}>
+        <Card className={`world-clock-card ${mode}`}>
+          <CardContent className="clock-content">
             <ClockIcon
               isDay={isDay}
-              color={iconColor}
+              color={isDay ? "#FFD700" : "#ffffff"}
             />
 
             <Typography
               variant="h4"
+              className="clock-title"
               sx={{
-                mt: 2,
-                mb: 1,
-                fontWeight: "bold",
-                letterSpacing: 0.5,
-                color: textColor,
+                color: isDay ? "#0b2545" : "#ffffff",
               }}
             >
               {selectedCity.name}
@@ -115,19 +86,13 @@ export default function WorldClock() {
 
             <Typography
               variant="h5"
+              className="clock-time"
               sx={{
-                mb: 2,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: textColor,
+                color: isDay ? "#0b2545" : "#ffffff",
               }}
             >
               <AccessTime
-                sx={{
-                  mr: 1,
-                  color: textColor,
-                }}
+                className="clock-time-icon"
               />
 
               {formattedTime}
@@ -135,28 +100,25 @@ export default function WorldClock() {
 
             <Chip
               label={isDay ? "☀️ Día" : "🌙 Noche"}
+              className={`clock-status ${mode}`}
               sx={{
-                bgcolor: isDay
-                  ? "rgba(255,255,255,0.6)"
-                  : "rgba(0,0,0,0.3)",
-                color: textColor,
-                mb: 2,
-                fontWeight: "bold",
+                color: isDay ? "#0b2545" : "#ffffff",
               }}
             />
 
             <FormControl
               fullWidth
               variant="outlined"
-              sx={{ mt: 2 }}
+              className={`city-select ${mode}`}
             >
               <InputLabel
                 sx={{
-                  color: textColor,
+                  color: isDay ? "#0b2545" : "#ffffff",
                   "&.Mui-focused": {
-                    color: textColor,
+                    color: isDay
+                      ? "#0b2545"
+                      : "#ffffff",
                   },
-                  fontWeight: "bold",
                 }}
               >
                 Ciudad
@@ -167,38 +129,13 @@ export default function WorldClock() {
                 label="Ciudad"
                 onChange={handleCityChange}
                 sx={{
-                  color: textColor,
-                  bgcolor: isDay
-                    ? "rgba(255,255,255,0.95)"
-                    : "rgba(255,255,255,0.1)",
-                  borderRadius: 2,
-                  fontWeight: "bold",
-
-                  ".MuiOutlinedInput-notchedOutline": {
-                    borderColor: "black",
-                  },
-
-                  "&:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "black",
-                  },
-
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "black",
-                  },
-
-                  ".MuiSvgIcon-root": {
-                    color: textColor,
-                  },
+                  color: isDay
+                    ? "#0b2545"
+                    : "#ffffff",
                 }}
                 MenuProps={{
                   PaperProps: {
-                    sx: {
-                      bgcolor: isDay ? "#fff" : "#333",
-                      color: isDay ? "#000" : "#fff",
-                      borderRadius: 2,
-                      boxShadow:
-                        "0 8px 24px rgba(0,0,0,0.3)",
-                    },
+                    className: `city-menu ${mode}`,
                   },
                 }}
               >
@@ -206,16 +143,7 @@ export default function WorldClock() {
                   <MenuItem
                     key={city.timezone}
                     value={city.name}
-                    sx={{
-                      color: isDay ? "#000" : "#fff",
-                      fontWeight: "bold",
-
-                      "&:hover": {
-                        bgcolor: isDay
-                          ? "rgba(0,0,0,0.1)"
-                          : "rgba(255,255,255,0.2)",
-                      },
-                    }}
+                    className={`city-option ${mode}`}
                   >
                     {city.name}
                   </MenuItem>
