@@ -101,18 +101,29 @@ La aplicación utiliza las zonas horarias internacionales proporcionadas por el 
 
 Algunas de las ciudades disponibles son:
 
-Quito
-Londres
-Nueva York
-Tokio
-Sídney
-Madrid
-París
-Los Ángeles
-Ciudad de México
-Buenos Aires
-Toronto
-Roma
+- Quito
+  
+- Londres
+  
+- Nueva York
+  
+- Tokio
+  
+- Sídney
+  
+- Madrid
+  
+- París
+  
+- Los Ángeles
+  
+- Ciudad de México
+  
+- Buenos Aires
+  
+- Toronto
+  
+- Roma
 
 👨‍💻 Autor
 
