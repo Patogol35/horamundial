@@ -1,3 +1,4 @@
+import React from "react";
 import { motion } from "framer-motion";
 import {
   WbSunny,
@@ -6,7 +7,6 @@ import {
 
 export default function ClockIcon({
   isDay,
-  color,
 }) {
   return (
     <motion.div
@@ -25,14 +25,14 @@ export default function ClockIcon({
         <WbSunny
           sx={{
             fontSize: 60,
-            color,
+            color: "#FFD700",
           }}
         />
       ) : (
         <DarkMode
           sx={{
             fontSize: 60,
-            color,
+            color: "#ffffff",
           }}
         />
       )}
