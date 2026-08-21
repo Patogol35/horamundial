@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+      import React, { useEffect, useState } from "react";
 import {
   CssBaseline,
   Container,
@@ -18,7 +18,6 @@ export default function App() {
   useEffect(() => {
     const checkDay = () => {
       const hour = new Date().getHours();
-
       setIsDay(hour >= 6 && hour < 18);
     };
 
@@ -51,17 +50,9 @@ export default function App() {
         >
           <motion.div
             className="app-header"
-            initial={{
-              opacity: 0,
-              y: -20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-            }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
             <Typography
               variant="h4"
