@@ -1,9 +1,16 @@
 import { motion } from "framer-motion";
-import { WbSunny, DarkMode } from "@mui/icons-material";
+import {
+  WbSunny,
+  DarkMode,
+} from "@mui/icons-material";
 
-export default function ClockIcon({ isDay, color }) {
+export default function ClockIcon({
+  isDay,
+  color,
+}) {
   return (
     <motion.div
+      className="clock-icon"
       animate={{
         rotate: isDay ? 0 : 180,
         y: [0, -5, 0],
@@ -15,9 +22,19 @@ export default function ClockIcon({ isDay, color }) {
       }}
     >
       {isDay ? (
-        <WbSunny sx={{ fontSize: 60, color }} />
+        <WbSunny
+          sx={{
+            fontSize: 60,
+            color,
+          }}
+        />
       ) : (
-        <DarkMode sx={{ fontSize: 60, color }} />
+        <DarkMode
+          sx={{
+            fontSize: 60,
+            color,
+          }}
+        />
       )}
     </motion.div>
   );
