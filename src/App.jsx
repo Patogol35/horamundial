@@ -1,34 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { CssBaseline, Container, Typography, Box, IconButton } from "@mui/material";
-import WorldClock from "./WorldClock";
-import { WbSunny, NightsStay } from "@mui/icons-material";
+import {
+  CssBaseline,
+  Container,
+  Typography,
+  Box,
+} from "@mui/material";
 import { motion } from "framer-motion";
 
+import WorldClock from "./WorldClock";
+import ModeToggle from "./components/ModeToggle";
+
 export default function App() {
-  const [isDay, setIsDay] = useState(false); // 🌙 inicia en modo oscuro por defecto
+  const [isDay, setIsDay] = useState(false);
 
   useEffect(() => {
     const checkDay = () => {
       const hour = new Date().getHours();
       setIsDay(hour >= 6 && hour < 18);
     };
+
     checkDay();
+
     const interval = setInterval(checkDay, 60 * 1000);
+
     return () => clearInterval(interval);
   }, []);
 
   const backgroundColor = isDay ? "#ffffff" : "#0f2027";
   const textColor = isDay ? "#0D47A1" : "#ffffff";
-  const iconColor = "#ffffff";
 
   return (
     <>
       <CssBaseline />
+
       <Box
         sx={{
-          width: "100vw", // ocupa todo el ancho
+          width: "100vw",
           minHeight: "100vh",
-          overflowX: "hidden", // evita scroll o espacio lateral
+          overflowX: "hidden",
           overflowY: "auto",
           background: backgroundColor,
           display: "flex",
@@ -42,7 +51,10 @@ export default function App() {
           m: 0,
         }}
       >
-        <Container maxWidth="sm" sx={{ px: { xs: 2, md: 0 } }}>
+        <Container
+          maxWidth="sm"
+          sx={{ px: { xs: 2, md: 0 } }}
+        >
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -61,10 +73,6 @@ export default function App() {
                 letterSpacing: 1,
                 mb: 2,
                 transition: "color 1s ease",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 1,
               }}
             >
               Reloj Global Interactivo
@@ -78,29 +86,19 @@ export default function App() {
                 fontWeight: 500,
               }}
             >
-              Creado por <strong>Jorge Patricio Santamaría Cherrez</strong>
+              Creado por{" "}
+              <strong>
+                Jorge Patricio Santamaría Cherrez
+              </strong>
             </Typography>
 
-            {/* 🔘 Botón de cambio de modo (sol/luna invertidos) */}
-            <IconButton
-              onClick={() => setIsDay(!isDay)}
-              sx={{
-                mb: 2,
-                bgcolor: isDay ? "#1976d2" : "#333",
-                color: iconColor,
-                borderRadius: "50%",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-                "&:hover": {
-                  bgcolor: isDay ? "#1565c0" : "#444",
-                },
-              }}
-            >
-              {/* El ícono ahora muestra la acción siguiente */}
-              {isDay ? <NightsStay /> : <WbSunny />}
-            </IconButton>
+            <ModeToggle
+              isDay={isDay}
+              onToggle={() => setIsDay(!isDay)}
+            />
           </motion.div>
 
-          <WorldClock isGlobalDay={isDay} />
+          <WorldClock />
         </Container>
       </Box>
     </>
