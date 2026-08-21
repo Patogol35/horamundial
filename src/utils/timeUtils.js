@@ -22,4 +22,4 @@ export function isDaytime(date, timezone) {
   const hour = getHourInTimezone(date, timezone);
 
   return hour >= 6 && hour < 18;
-    }
+}
