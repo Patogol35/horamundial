@@ -48,12 +48,13 @@ https://reloj-jorgepatricio.vercel.app/
 1. Clona el repositorio:
 
 ```bash
-git clone [URL-DE-TU-REPOSITORIO]
+git clone https://github.com/Patogol35/horamundial
 
 Ingresa a la carpeta del proyecto:
 
 ```bash
-cd WorldClock
+cd hora mundial
+
 Instala las dependencias:
 
 ```bash
