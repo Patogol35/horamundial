@@ -15,19 +15,9 @@ export default function ClockIcon({ isDay, color }) {
       }}
     >
       {isDay ? (
-        <WbSunny
-          sx={{
-            fontSize: 60,
-            color,
-          }}
-        />
+        <WbSunny sx={{ fontSize: 60, color }} />
       ) : (
-        <DarkMode
-          sx={{
-            fontSize: 60,
-            color,
-          }}
-        />
+        <DarkMode sx={{ fontSize: 60, color }} />
       )}
     </motion.div>
   );
