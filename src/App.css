@@ -61,3 +61,58 @@
     padding: 16px;
   }
 }
+
+/* =========================
+   BOTÓN MODO
+   ========================= */
+
+.mode-toggle {
+  width: 52px !important;
+  height: 52px !important;
+
+  margin-bottom: 16px !important;
+
+  color: #ffffff !important;
+
+  border-radius: 50% !important;
+
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.3) !important;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease !important;
+}
+
+.mode-toggle.day {
+  background: #1976d2 !important;
+}
+
+.mode-toggle.night {
+  background: #263238 !important;
+}
+
+.mode-toggle:hover {
+  transform: scale(1.08);
+}
+
+.mode-toggle:active {
+  transform: scale(0.94);
+}
+
+.mode-toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform 0.2s ease;
+}
+
+.mode-toggle.day .mode-toggle-icon {
+  transform: rotate(0deg);
+}
+
+.mode-toggle.night .mode-toggle-icon {
+  transform: rotate(-15deg);
+}
