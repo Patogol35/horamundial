@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Card,
@@ -16,8 +13,9 @@ import {
 } from "@mui/material";
 
 import { motion } from "framer-motion";
-
 import { AccessTime } from "@mui/icons-material";
+
+import ClockIcon from "./components/ClockIcon";
 
 import { cities } from "./data/cities";
 
@@ -26,27 +24,18 @@ import {
   isDaytime,
 } from "./utils/timeUtils";
 
-import ClockIcon from "./components/ClockIcon";
+import "./WorldClock.css";
 
 export default function WorldClock() {
   const [selectedCity, setSelectedCity] =
     useState(cities[0]);
 
-  const [time, setTime] = useState(
-    new Date()
-  );
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
-    const updateClock = () => {
+    const interval = setInterval(() => {
       setTime(new Date());
-    };
-
-    updateClock();
-
-    const interval = setInterval(
-      updateClock,
-      1000
-    );
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);
@@ -56,7 +45,7 @@ export default function WorldClock() {
     selectedCity.timezone
   );
 
-  const formattedTime = formatTime(
+  const currentTime = formatTime(
     time,
     selectedCity.timezone
   );
@@ -77,17 +66,9 @@ export default function WorldClock() {
   return (
     <motion.div
       className="world-clock"
-      initial={{
-        opacity: 0,
-        y: 30,
-      }}
-      animate={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 0.7,
-      }}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7 }}
     >
       <Box
         className={`world-clock-wrapper ${mode}`}
@@ -96,14 +77,7 @@ export default function WorldClock() {
           className={`world-clock-card ${mode}`}
         >
           <CardContent className="clock-content">
-            <ClockIcon
-              isDay={isDay}
-              color={
-                isDay
-                  ? "#FFD700"
-                  : "#ffffff"
-              }
-            />
+            <ClockIcon isDay={isDay} />
 
             <Typography
               variant="h4"
@@ -117,8 +91,7 @@ export default function WorldClock() {
               className="clock-time"
             >
               <AccessTime className="clock-time-icon" />
-
-              {formattedTime}
+              {currentTime}
             </Typography>
 
             <Chip
