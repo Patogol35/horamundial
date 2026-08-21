@@ -1,15 +1,25 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Autocomplete, TextField, Box, Button } from "@mui/material";
 import moment from "moment-timezone";
 
 export default function CitySelector({ onAddCity }) {
-  const allZones = moment.tz.names();
+  const allZones = useMemo(() => moment.tz.names(), []);
+
   const [selectedZone, setSelectedZone] = useState("");
 
   const handleAdd = () => {
     if (!selectedZone) return;
-    const cityName = selectedZone.split("/").pop().replace(/_/g, " ");
-    onAddCity({ name: cityName, timezone: selectedZone });
+
+    const cityName = selectedZone
+      .split("/")
+      .pop()
+      .replace(/_/g, " ");
+
+    onAddCity({
+      name: cityName,
+      timezone: selectedZone,
+    });
+
     setSelectedZone("");
   };
 
@@ -25,22 +35,31 @@ export default function CitySelector({ onAddCity }) {
     >
       <Autocomplete
         options={allZones}
-        sx={{ width: 300 }}
         value={selectedZone}
-        onChange={(e, newValue) => setSelectedZone(newValue)}
+        onChange={(event, newValue) => {
+          setSelectedZone(newValue || "");
+        }}
+        sx={{
+          width: 300,
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
             label="Buscar ciudad"
             variant="outlined"
             size="small"
-            sx={{ bgcolor: "white", borderRadius: 2 }}
+            sx={{
+              bgcolor: "white",
+              borderRadius: 2,
+            }}
           />
         )}
       />
+
       <Button
         variant="contained"
         onClick={handleAdd}
+        disabled={!selectedZone}
         sx={{
           borderRadius: 2,
           textTransform: "none",
