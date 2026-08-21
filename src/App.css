@@ -1,42 +1,351 @@
 #root {
-  max-width: 1280px;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  transition: background 1s ease-in-out;
+}
+
+/* =========================
+   MODOS
+   ========================= */
+
+.app.day-mode {
+  background: #ffffff;
+}
+
+.app.night-mode {
+  background: #0f2027;
+}
+
+/* =========================
+   CONTENEDOR PRINCIPAL
+   ========================= */
+
+.app-container {
+  width: 100%;
+}
+
+.app-header {
+  margin-bottom: 0;
+}
+
+/* =========================
+   TÍTULO
+   ========================= */
+
+.app-title {
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  margin-bottom: 16px !important;
+  transition: color 1s ease, text-shadow 1s ease !important;
+}
+
+.day-mode .app-title {
+  color: #0d47a1;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+}
+
+.night-mode .app-title {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* =========================
+   SUBTÍTULO
+   ========================= */
+
+.app-subtitle {
+  margin-bottom: 32px !important;
+  font-weight: 500 !important;
+  transition: color 1s ease !important;
+}
+
+.day-mode .app-subtitle {
+  color: #555555;
+}
+
+.night-mode .app-subtitle {
+  color: #dddddd;
+}
+
+/* =========================
+   BOTÓN MODO
+   ========================= */
+
+.mode-toggle {
+  margin-bottom: 16px !important;
+  color: #ffffff !important;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.mode-toggle.day {
+  background-color: #1976d2 !important;
+}
+
+.mode-toggle.night {
+  background-color: #333333 !important;
+}
+
+.mode-toggle.day:hover {
+  background-color: #1565c0 !important;
+  transform: scale(1.08);
+}
+
+.mode-toggle.night:hover {
+  background-color: #444444 !important;
+  transform: scale(1.08);
+}
+
+/* =========================
+   WORLD CLOCK
+   ========================= */
+
+.world-clock {
+  width: 100%;
+}
+
+.world-clock-wrapper {
+  width: 100%;
+  max-width: 420px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  border-radius: 16px;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+
+  backdrop-filter: blur(10px);
+
+  transition: background 1s ease;
+}
+
+.world-clock-wrapper.day {
+  background: linear-gradient(
+    135deg,
+    #e3f2fd,
+    #bbdefb
+  );
+}
+
+.world-clock-wrapper.night {
+  background: linear-gradient(
+    135deg,
+    #141e30,
+    #243b55
+  );
+}
+
+/* =========================
+   TARJETA
+   ========================= */
+
+.world-clock-card {
+  border-radius: 16px !important;
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 4px 25px rgba(0, 0, 0, 0.3) !important;
+
+  transition:
+    background 1s ease,
+    color 1s ease;
+}
+
+.world-clock-card.day {
+  background: rgba(255, 255, 255, 0.85) !important;
+}
+
+.world-clock-card.night {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* =========================
+   CONTENIDO DEL RELOJ
+   ========================= */
+
+.clock-content {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.clock-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.clock-title {
+  margin-top: 16px !important;
+  margin-bottom: 8px !important;
+
+  font-weight: bold !important;
+  letter-spacing: 0.5px !important;
+
+  transition: color 1s ease !important;
+}
+
+.clock-time {
+  margin-bottom: 16px !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: color 1s ease !important;
+}
+
+.clock-time-icon {
+  margin-right: 8px;
+}
+
+/* =========================
+   ESTADO DÍA / NOCHE
+   ========================= */
+
+.clock-status {
+  margin-bottom: 16px !important;
+  font-weight: bold !important;
+
+  transition:
+    background-color 1s ease,
+    color 1s ease;
+}
+
+.clock-status.day {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.clock-status.night {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* =========================
+   SELECTOR DE CIUDAD
+   ========================= */
+
+.city-select {
+  margin-top: 16px !important;
+}
+
+.city-select .MuiInputLabel-root {
+  font-weight: bold;
+}
+
+.city-select .MuiOutlinedInput-root {
+  border-radius: 8px;
+  font-weight: bold;
+
+  transition:
+    background-color 1s ease,
+    color 1s ease;
+}
+
+.city-select.day .MuiOutlinedInput-root {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.city-select.night .MuiOutlinedInput-root {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.city-select .MuiOutlinedInput-notchedOutline {
+  border-color: black;
+}
+
+.city-select .MuiOutlinedInput-root:hover
+.MuiOutlinedInput-notchedOutline {
+  border-color: black;
+}
+
+.city-select .MuiOutlinedInput-root.Mui-focused
+.MuiOutlinedInput-notchedOutline {
+  border-color: black;
+}
+
+.city-select .MuiSvgIcon-root {
+  color: inherit;
+}
+
+/* =========================
+   MENÚ DE CIUDADES
+   ========================= */
+
+.city-menu {
+  border-radius: 8px !important;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+.city-menu.day {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.city-menu.night {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+.city-option {
+  font-weight: bold !important;
+}
+
+.city-option.day {
+  color: #000000 !important;
+}
+
+.city-option.night {
+  color: #ffffff !important;
+}
+
+.city-option.day:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.city-option.night:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (min-width: 900px) {
+  .app {
+    padding: 24px;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media (max-width: 600px) {
+  .app {
+    padding: 16px;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .world-clock-wrapper {
+    padding: 16px;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
